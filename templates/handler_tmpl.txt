@@ -1,0 +1,102 @@
+package {{.Domain}}_handler
+
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strconv"
+
+	"{{.GoMod}}/server"
+	{{.Domain}}_models "{{.GoMod}}/{{.Domain}}/models"
+	{{.Domain}}_service "{{.GoMod}}/{{.Domain}}/service"
+	{{.Domain}}_storage "{{.GoMod}}/{{.Domain}}/storage"
+	"github.com/gorilla/mux"
+)
+
+type {{.CapitalizedDomain}}Handler struct {
+	{{.CapitalizedDomain}}Service {{.Domain}}_service.Service
+}
+
+func New{{.CapitalizedDomain}}Handler() *{{.CapitalizedDomain}}Handler {
+	{{.Domain}}Storage := {{.Domain}}_storage.New{{.CapitalizedDomain}}Storage()
+	{{.Domain}}Service := {{.Domain}}_service.New{{.CapitalizedDomain}}Service({{.Domain}}Storage)
+	return &{{.CapitalizedDomain}}Handler{
+		{{.CapitalizedDomain}}Service: {{.Domain}}Service,
+	}
+}
+
+func (handler *{{.CapitalizedDomain}}Handler) Get{{.CapitalizedDomain}}s(w http.ResponseWriter, r *http.Request) error {
+	{{.Domain}}s, err := handler.{{.CapitalizedDomain}}Service.Get{{.CapitalizedDomain}}s()
+	if {{.Domain}}s != nil {
+		server.WriteJSON(w, http.StatusOK, {{.Domain}}s)
+	}
+	return err
+}
+func (handler *{{.CapitalizedDomain}}Handler) Create{{.CapitalizedDomain}}(w http.ResponseWriter, r *http.Request) error {
+	var {{.Domain}} {{.Domain}}_models.{{.CapitalizedDomain}}
+
+	decodeErr := json.NewDecoder(r.Body).Decode(&{{.Domain}})
+	if decodeErr != nil {
+		return decodeErr
+	}
+
+	err := handler.{{.CapitalizedDomain}}Service.Create{{.CapitalizedDomain}}(&{{.Domain}})
+	if err == nil {
+		server.WriteJSON(w, http.StatusNoContent, nil)
+	}
+
+	return err
+}
+func (handler *{{.CapitalizedDomain}}Handler) Update{{.CapitalizedDomain}}(w http.ResponseWriter, r *http.Request) error {
+	var {{.Domain}} {{.Domain}}_models.{{.CapitalizedDomain}}
+
+	decodeErr := json.NewDecoder(r.Body).Decode(&{{.Domain}})
+	if decodeErr != nil {
+		return decodeErr
+	}
+
+	err := handler.{{.CapitalizedDomain}}Service.Update{{.CapitalizedDomain}}(&{{.Domain}})
+	if err == nil {
+		server.WriteJSON(w, http.StatusNoContent, nil)
+	}
+
+	return err
+}
+func (handler *{{.CapitalizedDomain}}Handler) Get{{.CapitalizedDomain}}ById(w http.ResponseWriter, r *http.Request) error {
+	idStr := mux.Vars(r)["id"]
+	id, conversionErr := strconv.Atoi(idStr)
+	if conversionErr != nil {
+		return conversionErr
+	}
+
+	{{.Domain}}s, err := handler.{{.CapitalizedDomain}}Service.Get{{.CapitalizedDomain}}ById(id)
+	fmt.Printf("%+v\n", {{.Domain}}s)
+	if {{.Domain}}s != nil {
+		server.WriteJSON(w, http.StatusOK, {{.Domain}}s)
+	}
+	return err
+}
+func (handler *{{.CapitalizedDomain}}Handler) Delete{{.CapitalizedDomain}}(w http.ResponseWriter, r *http.Request) error {
+	idStr := mux.Vars(r)["id"]
+	id, conversionErr := strconv.Atoi(idStr)
+	if conversionErr != nil {
+		return conversionErr
+	}
+
+	err := handler.{{.CapitalizedDomain}}Service.Delete{{.CapitalizedDomain}}(id)
+	if err == nil {
+		server.WriteJSON(w, http.StatusOK, nil)
+	}
+
+	return err
+}
+func (handler *{{.CapitalizedDomain}}Handler) SetupRouter(router *mux.Router) *mux.Router {
+	router.HandleFunc("/{{.Domain}}s", MakeHttpHandler(handler.Get{{.CapitalizedDomain}}s)).Methods(http.MethodGet)
+	router.HandleFunc("/{{.Domain}}s", MakeHttpHandler(handler.Create{{.CapitalizedDomain}})).Methods(http.MethodPost)
+	router.HandleFunc("/{{.Domain}}s/{id}", MakeHttpHandler(handler.Get{{.CapitalizedDomain}}ById)).Methods(http.MethodGet)
+	router.HandleFunc("/{{.Domain}}s/{id}", MakeHttpHandler(handler.Update{{.CapitalizedDomain}})).Methods(http.MethodPut)
+	router.HandleFunc("/{{.Domain}}s/{id}", MakeHttpHandler(handler.Delete{{.CapitalizedDomain}})).Methods(http.MethodDelete)
+
+	return router
+}
+

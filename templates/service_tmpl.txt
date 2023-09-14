@@ -1,0 +1,32 @@
+package {{.Domain}}_service
+
+import (
+	{{.Domain}}_models "{{.GoMod}}/{{.Domain}}/models"
+	{{.Domain}}_storage"{{.GoMod}}/{{.Domain}}/storage"
+)
+
+type {{.CapitalizedDomain}}Service struct {
+	{{.CapitalizedDomain}}Storage {{.Domain}}_storage.Storage
+}
+
+func New{{.CapitalizedDomain}}Service({{.Domain}}Storage {{.Domain}}_storage.Storage) *{{.CapitalizedDomain}}Service {
+	return &{{.CapitalizedDomain}}Service{
+		{{.CapitalizedDomain}}Storage: {{.Domain}}Storage,
+	}
+}
+
+func (service *{{.CapitalizedDomain}}Service) Get{{.CapitalizedDomain}}s() ([]*{{.Domain}}_models.{{.CapitalizedDomain}}, error) {
+	return service.{{.CapitalizedDomain}}Storage.Get{{.CapitalizedDomain}}s()
+}
+func (service *{{.CapitalizedDomain}}Service) Create{{.CapitalizedDomain}}({{.Domain}} *{{.Domain}}_models.{{.CapitalizedDomain}}) error {
+	return service.{{.CapitalizedDomain}}Storage.Create{{.CapitalizedDomain}}({{.Domain}})
+}
+func (service *{{.CapitalizedDomain}}Service) Update{{.CapitalizedDomain}}({{.Domain}} *{{.Domain}}_models.{{.CapitalizedDomain}}) error {
+	return service.{{.CapitalizedDomain}}Storage.Update{{.CapitalizedDomain}}({{.Domain}})
+}
+func (service *{{.CapitalizedDomain}}Service) Get{{.CapitalizedDomain}}ById(id int) (*{{.Domain}}_models.{{.CapitalizedDomain}}, error) {
+	return service.{{.CapitalizedDomain}}Storage.Get{{.CapitalizedDomain}}ById(id)
+}
+func (service *{{.CapitalizedDomain}}Service) Delete{{.CapitalizedDomain}}(id int) error {
+	return service.{{.CapitalizedDomain}}Storage.Delete{{.CapitalizedDomain}}(id)
+}

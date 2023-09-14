@@ -1,0 +1,11 @@
+package {{.Domain}}_models
+
+import (
+	"fmt"
+	"github.com/jackc/pgx/v5"
+)
+
+type Entity interface {
+  Scan(row pgx.Row) error
+  ScanRows(rows pgx.Rows) error
+}
