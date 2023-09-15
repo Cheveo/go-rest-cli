@@ -1,0 +1,21 @@
+package util
+
+import (
+	"fmt"
+	"net/http"
+)
+
+type ApiFunc func(w http.ResponseWriter, r *http.Request) error
+type ApiError struct {
+	Message string
+}
+
+func MakeHttpHandler(apiFunc ApiFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		err := apiFunc(w, r)
+		if err != nil {
+			fmt.Printf("Error %s", err.Error())
+			HandleHttpErrors(err, w, r)
+		}
+	}
+}

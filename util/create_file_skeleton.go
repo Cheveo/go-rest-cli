@@ -3,41 +3,38 @@ package util
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"text/template"
 
 	"cheveo.de/Development/go-rest-cli/types"
 )
 
-func CreateFileSkeleton(domain *types.DomainTmpl, typeDescription string) error {
+func CreateFileSkeleton(files []*types.FileInputs) error {
+	fmt.Println(files)
+	for _, file := range files {
+		tmpl := template.Must(template.ParseFiles(file.TemplatePath))
 
-	handlerInterfaceTmplFilePath := fmt.Sprintf("templates/%s_interface_tmpl.txt", typeDescription)
-	handlerTmplFilePath := fmt.Sprintf("templates/%s_tmpl.txt", typeDescription)
-	handlerInterfaceTmpl := template.Must(template.ParseFiles(handlerInterfaceTmplFilePath))
-	handlerTmpl := template.Must(template.ParseFiles(handlerTmplFilePath))
+		fmt.Println(filepath.Join(file.Context.Directory, file.FilePath))
+		if err := MakeDirAtPath(filepath.Join(file.Context.Directory, file.FilePath)); err != nil {
+			fmt.Println(err.Error())
+			os.Exit(1)
+		}
 
-	filePath := fmt.Sprintf("%s/%s", domain.Domain, typeDescription)
+		fmt.Println(fmt.Sprintf("Creating File...Path: %s | Filename: %s", file.FilePath, file.FileName))
 
-	if err := MakeDirAtPath(filePath); err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
+		createdFile, err := CreateFile(file.FilePath, file.FileName, file.Context.Directory)
+		if err != nil {
+			fmt.Println(err.Error())
+			os.Exit(1)
+		}
+		defer createdFile.Close()
+
+		err = tmpl.Execute(createdFile, file.Context)
+
+		if err != nil {
+			return err
+		}
 	}
 
-	handlerFile, err := CreateFile(filePath, fmt.Sprintf("%s_%s.go", domain.Domain, typeDescription))
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
-	defer handlerFile.Close()
-
-	handlerInterfaceFile, err := CreateFile(filePath, fmt.Sprintf("%s.go", typeDescription))
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
-	defer handlerInterfaceFile.Close()
-
-	err = handlerTmpl.Execute(handlerFile, domain)
-	err = handlerInterfaceTmpl.Execute(handlerInterfaceFile, domain)
-
-	return err
+	return nil
 }

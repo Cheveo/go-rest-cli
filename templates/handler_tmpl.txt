@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"{{.GoMod}}/server"
+	"{{.GoMod}}/util"
 	{{.Domain}}_models "{{.GoMod}}/{{.Domain}}/models"
 	{{.Domain}}_service "{{.GoMod}}/{{.Domain}}/service"
 	{{.Domain}}_storage "{{.GoMod}}/{{.Domain}}/storage"
@@ -28,7 +28,7 @@ func New{{.CapitalizedDomain}}Handler() *{{.CapitalizedDomain}}Handler {
 func (handler *{{.CapitalizedDomain}}Handler) Get{{.CapitalizedDomain}}s(w http.ResponseWriter, r *http.Request) error {
 	{{.Domain}}s, err := handler.{{.CapitalizedDomain}}Service.Get{{.CapitalizedDomain}}s()
 	if {{.Domain}}s != nil {
-		server.WriteJSON(w, http.StatusOK, {{.Domain}}s)
+		util.WriteJSON(w, http.StatusOK, {{.Domain}}s)
 	}
 	return err
 }
@@ -42,7 +42,7 @@ func (handler *{{.CapitalizedDomain}}Handler) Create{{.CapitalizedDomain}}(w htt
 
 	err := handler.{{.CapitalizedDomain}}Service.Create{{.CapitalizedDomain}}(&{{.Domain}})
 	if err == nil {
-		server.WriteJSON(w, http.StatusNoContent, nil)
+		util.WriteJSON(w, http.StatusNoContent, nil)
 	}
 
 	return err
@@ -57,7 +57,7 @@ func (handler *{{.CapitalizedDomain}}Handler) Update{{.CapitalizedDomain}}(w htt
 
 	err := handler.{{.CapitalizedDomain}}Service.Update{{.CapitalizedDomain}}(&{{.Domain}})
 	if err == nil {
-		server.WriteJSON(w, http.StatusNoContent, nil)
+		util.WriteJSON(w, http.StatusNoContent, nil)
 	}
 
 	return err
@@ -72,7 +72,7 @@ func (handler *{{.CapitalizedDomain}}Handler) Get{{.CapitalizedDomain}}ById(w ht
 	{{.Domain}}s, err := handler.{{.CapitalizedDomain}}Service.Get{{.CapitalizedDomain}}ById(id)
 	fmt.Printf("%+v\n", {{.Domain}}s)
 	if {{.Domain}}s != nil {
-		server.WriteJSON(w, http.StatusOK, {{.Domain}}s)
+		util.WriteJSON(w, http.StatusOK, {{.Domain}}s)
 	}
 	return err
 }
@@ -85,7 +85,7 @@ func (handler *{{.CapitalizedDomain}}Handler) Delete{{.CapitalizedDomain}}(w htt
 
 	err := handler.{{.CapitalizedDomain}}Service.Delete{{.CapitalizedDomain}}(id)
 	if err == nil {
-		server.WriteJSON(w, http.StatusOK, nil)
+		util.WriteJSON(w, http.StatusOK, nil)
 	}
 
 	return err

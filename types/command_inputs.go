@@ -7,6 +7,7 @@ type CommandInput struct {
 }
 
 type DomainTmpl struct {
+	Directory         string
 	Domain            string
 	CapitalizedDomain string
 	StructName        string

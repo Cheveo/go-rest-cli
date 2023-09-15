@@ -3,11 +3,12 @@ package util
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 )
 
-func CreateFile(filePath string, name string) (*os.File, error) {
+func CreateFile(filePath string, name string, dir string) (*os.File, error) {
 	fileName := fmt.Sprintf("%s/%s", filePath, name)
-	file, err := os.Create(fileName)
+	file, err := os.Create(filepath.Join(dir, fileName))
 	if err != nil {
 		return nil, err
 	}

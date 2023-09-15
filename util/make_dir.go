@@ -2,12 +2,14 @@ package util
 
 import (
 	"os"
-	"path/filepath"
 )
 
 func MakeDirAtPath(path string) error {
-	newpath := filepath.Join(".", path)
-	err := os.MkdirAll(newpath, os.ModePerm)
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		err := os.MkdirAll(path, os.ModePerm)
 
-	return err
+		return err
+	}
+
+	return nil
 }
