@@ -1,0 +1,50 @@
+package {{.Domain}}_storage
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"os"
+
+	{{.Domain}}_models "{{.GoMod}}/{{.Domain}}/models"
+	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/joho/godotenv"
+)
+
+type {{.CapitalizedDomain}}Storage struct {
+	DBPool *pgxpool.Pool
+}
+
+func New{{.CapitalizedDomain}}Storage() *{{.CapitalizedDomain}}Storage {
+	godotenv.Load(".env")
+	databaseUrl := os.Getenv("DATABASE_URL")
+	fmt.Printf("trying to connect to DB: %s", databaseUrl)
+	dbpool, err := pgxpool.New(context.Background(), databaseUrl)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to create connection pool: %v\n", err.Error())
+		os.Exit(1)
+	}
+
+  return &{{.CapitalizedDomain}}Storage{
+		DBPool: dbpool,
+	}
+}
+
+func (storage *{{.CapitalizedDomain}}Storage) Get{{.CapitalizedDomain}}s() ([]*{{.Domain}}_models.{{.CapitalizedDomain}}, error) {
+	{{.Domain}}s := []*{{.Domain}}_models.{{.CapitalizedDomain}}{}
+	return {{.Domain}}s, nil
+}
+func (storage *{{.CapitalizedDomain}}Storage) Create{{.CapitalizedDomain}}({{.Domain}} *{{.Domain}}_models.{{.CapitalizedDomain}}) error {
+	return nil 
+}
+func (storage *{{.CapitalizedDomain}}Storage) Update{{.CapitalizedDomain}}({{.Domain}} *{{.Domain}}_models.{{.CapitalizedDomain}}) error {
+	return nil 
+}
+func (storage *{{.CapitalizedDomain}}Storage) Get{{.CapitalizedDomain}}ById(id int) (*{{.Domain}}_models.{{.CapitalizedDomain}}, error) {
+	{{.Domain}} := new({{.Domain}}_models.{{.CapitalizedDomain}})
+
+	return {{.Domain}}, nil
+}
+func (storage *{{.CapitalizedDomain}}Storage) Delete{{.CapitalizedDomain}}(id int) error {
+	return nil
+}

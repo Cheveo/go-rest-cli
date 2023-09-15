@@ -1,0 +1,20 @@
+package {{.Domain}}_handler
+
+import (
+	"net/http"
+
+	"{{.GoMod}}/util"
+)
+
+type ApiError struct {
+	Message string
+}
+
+func HandleHttpErrors(err error, w http.ResponseWriter, r *http.Request) {
+	switch err.Error() {
+	case "Resource Not Found", "no rows in result set":
+		util.WriteJSON(w, http.StatusNotFound, ApiError{Message: "Resource Not Found"})
+	default:
+		util.WriteJSON(w, http.StatusBadRequest, ApiError{Message: err.Error()})
+	}
+}

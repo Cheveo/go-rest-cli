@@ -1,0 +1,25 @@
+package server
+
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/gorilla/mux"
+	"net/http"
+)
+
+type APIServer struct {
+	Port string
+	Test int
+}
+
+func NewAPIServer(port string) *APIServer {
+	return &APIServer{
+		Port: port,
+	}
+}
+func (s *APIServer) Run(router *mux.Router) {
+	fmt.Printf("Server listening on Port %s", s.Port)
+	err := http.ListenAndServe(fmt.Sprintf(":%s", s.Port), router)
+	fmt.Println(err)
+}
+

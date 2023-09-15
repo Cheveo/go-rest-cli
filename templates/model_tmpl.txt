@@ -1,0 +1,26 @@
+package {{.Domain}}_models
+
+import (
+	"fmt"
+	"github.com/jackc/pgx/v5"
+)
+
+type {{.CapitalizedDomain}} struct {
+	ID string `json:"id,omitempty"`
+}
+
+func ({{.Domain}} *{{.CapitalizedDomain}}) ScanRow(row pgx.Row) error {
+	err := row.Scan(&{{.Domain}}.ID)
+	if err != nil {
+		fmt.Printf("Scan error single row: %s", err.Error())
+	}
+	return err
+}
+func ({{.Domain}} *{{.CapitalizedDomain}}) ScanRows(rows pgx.Rows) error {
+	err := rows.Scan(&{{.Domain}}.ID)
+	if err != nil {
+		fmt.Printf("Scan user error: %s", err.Error())
+	}
+
+	return err
+}
