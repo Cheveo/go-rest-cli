@@ -22,7 +22,7 @@ Once installed, you can use `rest-cli` to create a new Golang REST API project s
 ### Example
 
 ```bash
-rest-cli --domain user --directory my-api-project --goModName example.com/test
+rest-cli create --domain user --directory my-api-project --goModName example.com/test
 ```
 
 This command will create a new Golang REST API project skeleton in the `my-api-project` directory, with the Go module name set to `example.com/test` and the domain set to `user`.
