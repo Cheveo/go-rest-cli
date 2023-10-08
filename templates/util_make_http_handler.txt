@@ -6,16 +6,15 @@ import (
 )
 
 type ApiFunc func(w http.ResponseWriter, r *http.Request) error
-type ApiError struct {
-	Message string
-}
+type HandleErrFunc func(error error, w http.ResponseWriter, r *http.Request)
 
-func MakeHttpHandler(apiFunc ApiFunc) http.HandlerFunc {
+func MakeHttpHandler(apiFunc ApiFunc, errFunc HandleErrFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := apiFunc(w, r)
 		if err != nil {
 			fmt.Printf("Error %s", err.Error())
-			HandleHttpErrors(err, w, r)
+			errFunc(err, w, r)
 		}
 	}
 }
+

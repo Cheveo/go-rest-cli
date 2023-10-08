@@ -1,0 +1,10 @@
+package {{.Domain}}_storage
+
+var Get{{.CapitalizedDomain}}sStatement = `select * from {{.Domain}}_service.{{.Domain}}s`
+var Get{{.CapitalizedDomain}}ByIdStatement = `select * from {{.Domain}}_service.{{.Domain}}s where id = %d`
+var Insert{{.CapitalizedDomain}}Statement = `
+INSERT INTO {{.Domain}}_service.{{.Domain}}s ()
+VALUES ()`
+var Update{{.CapitalizedDomain}}Statement = `UPDATE {{.Domain}}_service.{{.Domain}}s 
+SET ... WHERE id = $4;`
+var Delete{{.CapitalizedDomain}}ByIdStatement = `delete from {{.Domain}}_service.{{.Domain}}s where id = %d RETURNING id`

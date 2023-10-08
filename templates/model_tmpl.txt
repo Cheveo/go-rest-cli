@@ -19,7 +19,7 @@ func ({{.Domain}} *{{.CapitalizedDomain}}) ScanRow(row pgx.Row) error {
 func ({{.Domain}} *{{.CapitalizedDomain}}) ScanRows(rows pgx.Rows) error {
 	err := rows.Scan(&{{.Domain}}.ID)
 	if err != nil {
-		fmt.Printf("Scan user error: %s", err.Error())
+		fmt.Printf("Scan {{.CapitalizedDomain}} error: %s", err.Error())
 	}
 
 	return err

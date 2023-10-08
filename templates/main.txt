@@ -1,0 +1,25 @@
+package main
+
+import (
+	"net/http"
+
+	{{.Domain}}_handler "{{.GoMod}}/{{.Domain}}/handler"
+	"{{.GoMod}}/server"
+	"github.com/gorilla/mux"
+)
+
+func main() {
+	r := mux.NewRouter()
+	h := {{.Domain}}_handler.New{{.CapitalizedDomain}}Handler()
+	h.SetupRouter(r)
+
+	r.HandleFunc("/healthcheck", Healthcheck).Methods("GET")
+
+	s := server.NewAPIServer("3001")
+
+	s.Run(r)
+}
+
+func Healthcheck(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNoContent)
+}

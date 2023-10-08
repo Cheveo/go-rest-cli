@@ -1,8 +1,8 @@
-package {{.Domain}}_service
+package {{.Domain}}_storage
 
 import {{.Domain}}_models "{{.GoMod}}/{{.Domain}}/models"
 
-type Service interface {
+type Storage interface {
 	Get{{.CapitalizedDomain}}s() ([]*{{.Domain}}_models.{{.CapitalizedDomain}}, error)
 	Get{{.CapitalizedDomain}}ById(id int) (*{{.Domain}}_models.{{.CapitalizedDomain}}, error)
 	Update{{.CapitalizedDomain}}({{.Domain}} *{{.Domain}}_models.{{.CapitalizedDomain}}) error
