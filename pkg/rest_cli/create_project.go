@@ -1,4 +1,4 @@
-package rest_cli
+package rest_cli 
 
 import (
 	"os"
@@ -10,7 +10,7 @@ import (
 	"golang.org/x/text/language"
 )
 
-func CreateDomainFromScratch(domain, modName, directory string, includeUtils bool) error {
+func CreateProjectFromScratch(domain, modName, directory string) error {
 	var resolvedUserPath string
 	if directory != "" {
 		userPath, _ := os.UserHomeDir()
@@ -26,15 +26,16 @@ func CreateDomainFromScratch(domain, modName, directory string, includeUtils boo
 		GoMod:             modName,
 	}
 
-	err := util.CreateFileSkeleton(util.CreateHandler(&d))
-
+	err := util.CreateFileSkeleton(util.CreateMain(&d))
+	err = util.CreateFileSkeleton(util.CreateGoMod(&d))
+	err = util.CreateFileSkeleton(util.CreateHandler(&d))
+	err = util.CreateFileSkeleton(util.CreateUtil(&d))
 	err = util.CreateFileSkeleton(util.CreateService(&d))
 	err = util.CreateFileSkeleton(util.CreateStorage(&d))
 	err = util.CreateFileSkeleton(util.CreateModel(&d))
-	
-    if includeUtils {
-		err = util.CreateFileSkeleton(util.CreateUtil(&d))
-	}
+	err = util.CreateFileSkeleton(util.CreateServer(&d))
 
 	return err
 }
+
+
