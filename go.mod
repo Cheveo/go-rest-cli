@@ -1,4 +1,4 @@
-module cheveo.de/Development/go-rest-cli
+module github.com/Cheveo/go-rest-template-cli
 
 go 1.21.0
 

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"cheveo.de/Development/go-rest-cli/types"
+	"github.com/Cheveo/go-rest-template-cli/types"
 )
 
 func CreateFileSkeleton(files []*types.FileInputs) error {
