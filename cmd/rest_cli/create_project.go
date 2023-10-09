@@ -3,7 +3,7 @@ package rest_cli
 import (
 	"fmt"
 
-	"cheveo.de/Development/go-rest-cli/pkg/rest_cli"
+	"github.com/Cheveo/go-rest-template-cli/pkg/rest_cli"
 	"github.com/spf13/cobra"
 )
 
