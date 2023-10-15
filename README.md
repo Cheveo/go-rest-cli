@@ -8,7 +8,7 @@ REST-CLI is a command-line tool built with Golang and Cobra that simplifies the 
 To install `rest-cli`, you can use `go get`:
 
 ```bash
-go get github.com/Cheveo/go-rest-template-cli
+go get github.com/Cheveo/go-rest-cli
 ```
 
 ## Usage

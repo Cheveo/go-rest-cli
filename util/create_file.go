@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Cheveo/go-rest-template-cli/types"
+	"github.com/Cheveo/go-rest-cli/types"
 )
 
 func CreateFile(filePath string, name string, dir string) (*os.File, error) {

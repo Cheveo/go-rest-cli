@@ -4,8 +4,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Cheveo/go-rest-template-cli/types"
-	"github.com/Cheveo/go-rest-template-cli/util"
+	"github.com/Cheveo/go-rest-cli/types"
+	"github.com/Cheveo/go-rest-cli/util"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )

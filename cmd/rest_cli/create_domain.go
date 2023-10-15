@@ -3,7 +3,7 @@ package rest_cli
 import (
 	"fmt"
 
-	"github.com/Cheveo/go-rest-template-cli/pkg/rest_cli"
+	"github.com/Cheveo/go-rest-cli/pkg/rest_cli"
 	"github.com/spf13/cobra"
 )
 
@@ -16,16 +16,25 @@ var createDomainCmd = &cobra.Command{
 	Short:   "Creates a whole domain from scratch",
 	Args:    cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("args", args)
-		res := rest_cli.CreateDomainFromScratch(name, modName, directory, includeUtils)
-		fmt.Println(res)
+		if name == "" {
+			fmt.Println("The name of the domain is required.")
+		}
+		if modName == "" {
+			fmt.Println("The name of the module is required.")
+		}
+		
+		err := rest_cli.CreateDomainFromScratch(name, modName, directory, includeUtils)
+		if err != nil {
+			panic(err.Error())
+		}
 	},
 }
 
 func init() {
-	createDomainCmd.Flags().StringVarP(&name, "name", "n", "test", "The name of the domain")
-	createDomainCmd.Flags().StringVarP(&modName, "goModName", "m", "example.com/test", "The Go mod name")
-	createDomainCmd.Flags().StringVarP(&directory, "directory", "p", "test-dir", "The Directory to create the project")
+	createDomainCmd.Flags().StringVarP(&name, "name", "n", "", "The name of the domain")
+	createDomainCmd.Flags().StringVarP(&modName, "goModName", "m", "", "The Go mod name")
+	createDomainCmd.Flags().StringVarP(&directory, "directory", "p", "", "The Directory to create the project")
 	createDomainCmd.Flags().BoolVarP(&includeUtils, "includeUtils", "i", false, "Create with utils: makeHttpHandler and writeJson")
+
 	rootCmd.AddCommand(createDomainCmd)
 }

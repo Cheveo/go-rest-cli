@@ -6,15 +6,13 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/Cheveo/go-rest-template-cli/types"
+	"github.com/Cheveo/go-rest-cli/types"
 )
 
 func CreateFileSkeleton(files []*types.FileInputs) error {
-	fmt.Println(files)
 	for _, file := range files {
-		tmpl := template.Must(template.ParseFiles(file.TemplatePath))
+		tmpl := template.Must(template.ParseFiles(filepath.Join(file.TemplatePath)))
 
-		fmt.Println(filepath.Join(file.Context.Directory, file.FilePath))
 		if err := MakeDirAtPath(filepath.Join(file.Context.Directory, file.FilePath)); err != nil {
 			fmt.Println(err.Error())
 			os.Exit(1)
