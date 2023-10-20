@@ -3,7 +3,7 @@ package rest_cli
 import (
 	"fmt"
 
-	"github.com/Cheveo/go-rest-cli/pkg/rest_cli"
+	"github.com/Cheveo/go-rest-cli/internal/pkg/rest_cli"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +23,9 @@ var createDomainCmd = &cobra.Command{
 			fmt.Println("The name of the module is required.")
 		}
 		
-		err := rest_cli.CreateDomainFromScratch(name, modName, directory, includeUtils)
+		standardDomain := rest_cli.NewStandardDomain()
+		err := standardDomain.Create(name, modName, directory, includeUtils)
+
 		if err != nil {
 			panic(err.Error())
 		}

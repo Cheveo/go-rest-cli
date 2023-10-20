@@ -3,7 +3,7 @@ package rest_cli
 import (
 	"fmt"
 
-	"github.com/Cheveo/go-rest-cli/pkg/rest_cli"
+	"github.com/Cheveo/go-rest-cli/internal/pkg/rest_cli"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +22,8 @@ var createProjectCmd = &cobra.Command{
 			fmt.Println("The name of the module is required.")
 		}
 		
-		err := rest_cli.CreateProjectFromScratch(domain, modName, directory)
+		standardProject := rest_cli.NewStandardProject()
+		err := standardProject.Create(domain, modName, directory)
 		if err != nil {
 			panic(err.Error())
 		}
