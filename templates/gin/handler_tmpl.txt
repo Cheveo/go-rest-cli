@@ -1,4 +1,4 @@
-package handlers
+package {{.Domain}}_handler
 
 import (
 	"fmt"
@@ -15,19 +15,19 @@ import (
 )
 
 type {{.Domain}}Handler struct {
-	{{.Domain}}Service {{.Domain}}_service.Service
+	{{.CapitalizedDomain}}Service {{.Domain}}_service.Service
 }
 
-func New{{.Domain}}Handler(db *gorm.DB) *{{.Domain}}Handler {
+func New{{.CapitalizedDomain}}Handler(db *gorm.DB) *{{.Domain}}Handler {
 	{{.Domain}}Storage := {{.Domain}}_storage.New{{.CapitalizedDomain}}Storage(db)
 	{{.Domain}}Service := {{.Domain}}_service.New{{.CapitalizedDomain}}Service({{.Domain}}Storage)
 	return &{{.Domain}}Handler{
-		{{.Domain}}Service: {{.Domain}}Service,
+		{{.CapitalizedDomain}}Service: {{.Domain}}Service,
 	}
 }
 
-func (handler *{{.Domain}}Handler) Get{{.Domain}}s(c *gin.Context) {
-	{{.Domain}}s, err := handler.{{.Domain}}Service.Get{{.CapitalizedDomain}}s()
+func (handler *{{.Domain}}Handler) Get{{.CapitalizedDomain}}s(c *gin.Context) {
+	{{.Domain}}s, err := handler.{{.CapitalizedDomain}}Service.Get{{.CapitalizedDomain}}s()
 	if err != nil {
 		httperror := errors.NewHttpError("Test error", http.StatusBadRequest)
 		c.Error(httperror)
@@ -39,7 +39,7 @@ func (handler *{{.Domain}}Handler) Get{{.Domain}}s(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (handler *{{.Domain}}Handler) Create{{.Domain}}(c *gin.Context) {
+func (handler *{{.Domain}}Handler) Create{{.CapitalizedDomain}}(c *gin.Context) {
 	var {{.Domain}} {{.Domain}}_models.{{.CapitalizedDomain}}
 
 	err := c.BindJSON(&{{.Domain}})
@@ -50,7 +50,7 @@ func (handler *{{.Domain}}Handler) Create{{.Domain}}(c *gin.Context) {
 		return
 	}
 
-	err = handler.{{.Domain}}Service.Create{{.Domain}}(&{{.Domain}})
+	err = handler.{{.CapitalizedDomain}}Service.Create{{.CapitalizedDomain}}(&{{.Domain}})
 	if err != nil {
 		fmt.Println(err.Error())
 		http_error := errors.NewHttpError("Could not create resource object", http.StatusBadRequest)
@@ -61,7 +61,7 @@ func (handler *{{.Domain}}Handler) Create{{.Domain}}(c *gin.Context) {
 	c.JSON(http.StatusCreated, nil)
 }
 
-func (handler *{{.Domain}}Handler) Update{{.Domain}}(c *gin.Context) {
+func (handler *{{.Domain}}Handler) Update{{.CapitalizedDomain}}(c *gin.Context) {
 	var {{.Domain}} {{.Domain}}_models.{{.CapitalizedDomain}}
 
 	err := c.BindJSON(&{{.Domain}})
@@ -71,7 +71,7 @@ func (handler *{{.Domain}}Handler) Update{{.Domain}}(c *gin.Context) {
 		return
 	}
 
-	err = handler.{{.Domain}}Service.Update{{.Domain}}(&{{.Domain}})
+	err = handler.{{.CapitalizedDomain}}Service.Update{{.CapitalizedDomain}}(&{{.Domain}})
 	if err != nil {
 		http_error := errors.NewHttpError("Could not update resource", http.StatusBadRequest)
 		c.Error(http_error)
@@ -81,7 +81,7 @@ func (handler *{{.Domain}}Handler) Update{{.Domain}}(c *gin.Context) {
 	c.JSON(http.StatusNoContent, nil)
 }
 
-func (handler *{{.Domain}}Handler) Get{{.Domain}}ById(c *gin.Context) {
+func (handler *{{.Domain}}Handler) Get{{.CapitalizedDomain}}ById(c *gin.Context) {
 	idStr := c.Param("id")
 	id, conversionErr := strconv.Atoi(idStr)
 	if conversionErr != nil {
@@ -90,7 +90,7 @@ func (handler *{{.Domain}}Handler) Get{{.Domain}}ById(c *gin.Context) {
 		return
 	}
 
-	{{.Domain}}, err := handler.{{.Domain}}Service.Get{{.CapitalizedDomain}}ById(id)
+	{{.Domain}}, err := handler.{{.CapitalizedDomain}}Service.Get{{.CapitalizedDomain}}ById(id)
 	if err != nil {
 		http_error := errors.NewHttpError("Object is malformed", http.StatusBadRequest)
 		c.Error(http_error)
@@ -107,7 +107,7 @@ func (handler *{{.Domain}}Handler) Get{{.Domain}}ById(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (handler *{{.Domain}}Handler) Delete{{.Domain}}(c *gin.Context) {
+func (handler *{{.Domain}}Handler) Delete{{.CapitalizedDomain}}(c *gin.Context) {
 	idStr := c.Param("id")
 	id, conversionErr := strconv.Atoi(idStr)
 	if conversionErr != nil {
@@ -116,7 +116,7 @@ func (handler *{{.Domain}}Handler) Delete{{.Domain}}(c *gin.Context) {
 		return
 	}
 
-	err := handler.{{.Domain}}Service.Delete{{.Domain}}(id)
+	err := handler.{{.CapitalizedDomain}}Service.Delete{{.CapitalizedDomain}}(id)
 	if err != nil {
 		http_error := errors.NewHttpError("Couldn't delete object", http.StatusBadRequest)
 		c.Error(http_error)
@@ -127,11 +127,11 @@ func (handler *{{.Domain}}Handler) Delete{{.Domain}}(c *gin.Context) {
 }
 
 func (handler *{{.Domain}}Handler) SetupRouter(r *gin.Engine) *gin.Engine {
-	r.GET("/{{.Domain}}s", handler.Get{{.Domain}}s)
-	r.POST("/{{.Domain}}s", handler.Create{{.Domain}})
-	r.GET("/{{.Domain}}s/:id", handler.Get{{.Domain}}ById)
-	r.PUT("/{{.Domain}}s/:id", handler.Update{{.Domain}})
-	r.DELETE("/{{.Domain}}s/:id", handler.Delete{{.Domain}})
+	r.GET("/{{.Domain}}s", handler.Get{{.CapitalizedDomain}}s)
+	r.POST("/{{.Domain}}s", handler.Create{{.CapitalizedDomain}})
+	r.GET("/{{.Domain}}s/:id", handler.Get{{.CapitalizedDomain}}ById)
+	r.PUT("/{{.Domain}}s/:id", handler.Update{{.CapitalizedDomain}})
+	r.DELETE("/{{.Domain}}s/:id", handler.Delete{{.CapitalizedDomain}})
 
 	return r
 }

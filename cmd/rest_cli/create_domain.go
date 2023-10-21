@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Cheveo/go-rest-cli/internal/pkg/rest_cli"
+	"github.com/Cheveo/go-rest-cli/types" 
 	"github.com/spf13/cobra"
 )
 
@@ -22,9 +23,11 @@ var createDomainCmd = &cobra.Command{
 		if modName == "" {
 			fmt.Println("The name of the module is required.")
 		}
-		
-		standardDomain := rest_cli.NewStandardDomain()
-		err := standardDomain.Create(name, modName, directory, includeUtils)
+
+		d := types.NewDomainTmpl(directory, name, modName, "templates", includeUtils, types.StandardDomain)	
+
+		domain := rest_cli.ProjectTypeFactory(d)
+		err := domain.Create()
 
 		if err != nil {
 			panic(err.Error())
@@ -40,3 +43,5 @@ func init() {
 
 	rootCmd.AddCommand(createDomainCmd)
 }
+
+

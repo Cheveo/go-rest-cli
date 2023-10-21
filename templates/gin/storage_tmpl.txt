@@ -1,0 +1,54 @@
+package {{.Domain}}_storage
+
+import (
+	{{.Domain}}_models "{{.GoMod}}/{{.Domain}}/models"
+	"gorm.io/gorm"
+)
+
+type {{.Domain}}Storage struct {
+	DBPool *gorm.DB
+}
+
+func New{{.CapitalizedDomain}}Storage(db *gorm.DB) *{{.Domain}}Storage {
+	db.AutoMigrate(&{{.Domain}}_models.{{.CapitalizedDomain}}{})
+
+	return &{{.Domain}}Storage{
+		DBPool: db,
+	}
+}
+
+func (storage *{{.Domain}}Storage) Get{{.CapitalizedDomain}}s() ([]*{{.Domain}}_models.{{.CapitalizedDomain}}, error) {
+	{{.Domain}}s := []*{{.Domain}}_models.{{.CapitalizedDomain}}{}
+
+	res := storage.DBPool.Find(&{{.Domain}}s)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return {{.Domain}}s, nil
+}
+func (storage *{{.Domain}}Storage) Create{{.CapitalizedDomain}}({{.Domain}} *{{.Domain}}_models.{{.CapitalizedDomain}}) error {
+	res := storage.DBPool.Create({{.Domain}})
+
+	return res.Error
+}
+func (storage *{{.Domain}}Storage) Update{{.CapitalizedDomain}}({{.Domain}} *{{.Domain}}_models.{{.CapitalizedDomain}}) error {
+	res := storage.DBPool.Save({{.Domain}})
+
+	return res.Error
+}
+func (storage *{{.Domain}}Storage) Get{{.CapitalizedDomain}}ById(id int) (*{{.Domain}}_models.{{.CapitalizedDomain}}, error) {
+	{{.Domain}} := new({{.Domain}}_models.{{.CapitalizedDomain}})
+
+	res := storage.DBPool.Find(&{{.Domain}}, id)
+	if res.Error != nil {
+		return nil, res.Error
+	}
+
+	return {{.Domain}}, nil
+}
+func (storage *{{.Domain}}Storage) Delete{{.CapitalizedDomain}}(id int) error {
+	res := storage.DBPool.Delete(&{{.Domain}}_models.{{.CapitalizedDomain}}{}, id)
+
+	return res.Error
+}

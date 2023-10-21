@@ -14,15 +14,15 @@ func CreateFileSkeleton(files []*types.FileInputs) error {
 		tmpl := template.Must(template.ParseFiles(filepath.Join(file.TemplatePath)))
 
 		if err := MakeDirAtPath(filepath.Join(file.Context.Directory, file.FilePath)); err != nil {
-			fmt.Println(err.Error())
+			fmt.Println("error", err.Error())
 			os.Exit(1)
 		}
 
-		fmt.Println(fmt.Sprintf("Creating File...Path: %s | Filename: %s", file.FilePath, file.FileName))
+		fmt.Printf("Creating File at Path: %s | Filename: %s", file.FilePath, file.FileName)
 
 		createdFile, err := CreateFile(file.FilePath, file.FileName, file.Context.Directory)
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Println("error", err.Error())
 			os.Exit(1)
 		}
 		defer createdFile.Close()

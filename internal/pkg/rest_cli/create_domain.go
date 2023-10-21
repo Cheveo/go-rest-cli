@@ -1,45 +1,30 @@
 package rest_cli
 
 import (
-	"os"
-	"path/filepath"
-
 	"github.com/Cheveo/go-rest-cli/types"
 	"github.com/Cheveo/go-rest-cli/util"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 )
 
-type standardDomain struct{}
+type standardDomain struct {
+	Domain *types.DomainTmpl
+}
 
-func (s *standardDomain) Create(domain, modName, directory string, includeUtils bool) error {
-	var resolvedUserPath string
-	if directory != "" {
-		userPath, _ := os.UserHomeDir()
-		resolvedUserPath = userPath
-	} else {
-		resolvedUserPath = ""
-	}
+func (s *standardDomain) Create() error {
+	err := util.CreateFileSkeleton(util.CreateHandler(s.Domain))
 
-	d := types.DomainTmpl{
-		Directory:         filepath.Join(resolvedUserPath, directory),
-		Domain:            domain,
-		CapitalizedDomain: cases.Title(language.English, cases.Compact).String(domain),
-		GoMod:             modName,
-	}
-	err := util.CreateFileSkeleton(util.CreateHandler(&d))
+	err = util.CreateFileSkeleton(util.CreateService(s.Domain))
+	err = util.CreateFileSkeleton(util.CreateStorage(s.Domain))
+	err = util.CreateFileSkeleton(util.CreateModel(s.Domain))
 
-	err = util.CreateFileSkeleton(util.CreateService(&d))
-	err = util.CreateFileSkeleton(util.CreateStorage(&d))
-	err = util.CreateFileSkeleton(util.CreateModel(&d))
-
-	if includeUtils {
-		err = util.CreateFileSkeleton(util.CreateUtil(&d))
+	if s.Domain.IncludeUtils {
+		err = util.CreateFileSkeleton(util.CreateUtil(s.Domain))
 	}
 
 	return err
 }
 
-func NewStandardDomain() *standardDomain {
-	return &standardDomain{}
+func NewStandardDomain(d *types.DomainTmpl) *standardDomain {
+	return &standardDomain{
+		Domain: d,
+	}
 }

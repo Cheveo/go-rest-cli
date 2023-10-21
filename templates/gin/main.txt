@@ -1,0 +1,30 @@
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"{{.GoMod}}/db"
+	{{.Domain}}_handler "{{.GoMod}}/{{.Domain}}/handler"
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+)
+
+func SetupRouter() *gin.Engine {
+	godotenv.Load(".env")
+	databaseUrl := os.Getenv("DATABASE_URL")
+	database := db.NewDatabase()
+	db := database.CreateDB(databaseUrl)
+
+	r := gin.Default()
+
+	uh := {{.Domain}}_handler.New{{.CapitalizedDomain}}Handler(db)
+	uh.SetupRouter(r)
+
+	return r
+}
+
+func main() {
+	r := SetupRouter()
+	r.Run(fmt.Sprintf("0.0.0.0:%s", os.Getenv("PORT")))
+}

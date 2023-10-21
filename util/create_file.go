@@ -9,8 +9,8 @@ import (
 )
 
 func CreateFile(filePath string, name string, dir string) (*os.File, error) {
-	fileName := fmt.Sprintf("%s/%s", filePath, name)
-	file, err := os.Create(filepath.Join(dir, fileName))
+	fileName := fmt.Sprintf("%s/%s/%s", dir, filePath, name)
+	file, err := os.Create(filepath.Join(fileName))
 	if err != nil {
 		return nil, err
 	}
@@ -73,9 +73,23 @@ func CreateStorage(domain *types.DomainTmpl) []*types.FileInputs {
 	storageFileName := fmt.Sprintf("%s_%s.go", domain.Domain, "storage")
 	storageSqlStatementsFileName := fmt.Sprintf("%s_%s.go", domain.Domain, "sql_statements")
 
-	storageFileInput := CreateFileInput(domain, "templates/storage_tmpl.txt", filePath, storageFileName)
-	storageSqlStatementsFileInput := CreateFileInput(domain, "templates/storage_sql_statements_tmpl.txt", filePath, storageSqlStatementsFileName)
-	storageInterfaceFileInput := CreateFileInput(domain, "templates/storage_interface_tmpl.txt", filePath, "storage.go")
+	storageFileInput := CreateFileInput(
+		domain,
+		fmt.Sprintf("%s/storage_tmpl.txt", domain.TemplatePath),
+		filePath,
+		storageFileName,
+	)
+	storageSqlStatementsFileInput := CreateFileInput(
+		domain,
+		fmt.Sprintf("%s/storage_sql_statements_tmpl.txt", domain.TemplatePath),
+		filePath, storageSqlStatementsFileName,
+	)
+	storageInterfaceFileInput := CreateFileInput(
+		domain,
+		fmt.Sprintf("%s/storage_interface_tmpl.txt", domain.TemplatePath),
+		filePath,
+		"storage.go",
+	)
 
 	return []*types.FileInputs{storageFileInput, storageInterfaceFileInput, storageSqlStatementsFileInput}
 }

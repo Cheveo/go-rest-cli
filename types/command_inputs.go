@@ -1,9 +1,35 @@
 package types
 
-type CommandInput struct {
-	Required    bool
-	Input       string
-	Description string
+import (
+	"os"
+	"path/filepath"
+
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
+)
+
+type ProjectType int
+
+const (
+	StandardDomain ProjectType = iota
+	StandardProject
+	GinProject
+	GinDomain
+)
+
+func (pt ProjectType) String() string {
+	switch pt {
+	case StandardProject:
+		return "StandardProject"
+	case StandardDomain:
+		return "StandardDomain"
+	case GinProject:
+		return "GinProject"
+	case GinDomain:
+		return "GinDomain"
+	}
+
+	return "Unknown"
 }
 
 type DomainTmpl struct {
@@ -12,4 +38,27 @@ type DomainTmpl struct {
 	CapitalizedDomain string
 	StructName        string
 	GoMod             string
+	Type              ProjectType
+	IncludeUtils      bool
+	TemplatePath      string
+}
+
+func NewDomainTmpl(directory, domain, modName, templatePath string, includeUtils bool, t ProjectType) *DomainTmpl {
+	var resolvedUserPath string
+	if directory != "" {
+		userPath, _ := os.UserHomeDir()
+		resolvedUserPath = userPath
+	} else {
+		resolvedUserPath = ""
+	}
+
+	return &DomainTmpl{
+		Directory:         filepath.Join(resolvedUserPath, directory),
+		Domain:            domain,
+		CapitalizedDomain: cases.Title(language.English, cases.Compact).String(domain),
+		GoMod:             modName,
+		Type:              t,
+		IncludeUtils:      includeUtils,
+		TemplatePath:      templatePath,
+	}
 }
