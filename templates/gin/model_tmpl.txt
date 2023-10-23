@@ -4,5 +4,4 @@ import "gorm.io/gorm"
 
 type {{.CapitalizedDomain}} struct {
     gorm.Model
-	ID string `json:"id,omitempty"`
 }
