@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"text/template"
 
+	"github.com/Cheveo/go-rest-cli/globals"
 	"github.com/Cheveo/go-rest-cli/types"
 )
 
 func CreateFileSkeleton(files []*types.FileInputs) error {
+	tmpls := globals.Templates
 	for _, file := range files {
-		tmpl := template.Must(template.ParseFiles(filepath.Join(file.TemplatePath)))
+
+		// templates are organized via template path
+		tmpl := tmpls[file.TemplatePath]
 
 		if err := MakeDirAtPath(filepath.Join(file.Context.Directory, file.FilePath)); err != nil {
 			fmt.Println("error", err.Error())
 			os.Exit(1)
 		}
 
-		fmt.Printf("Creating File at Path: %s | Filename: %s", file.FilePath, file.FileName)
 
 		createdFile, err := CreateFile(file.FilePath, file.FileName, file.Context.Directory)
 		if err != nil {
