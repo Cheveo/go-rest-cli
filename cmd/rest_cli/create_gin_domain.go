@@ -19,14 +19,14 @@ var createGinDomainCmd = &cobra.Command{
 		color.Set(color.FgRed)
 		defer color.Unset()
 
-		if name == "" {
+		if domain == "" {
 			util.Exit("[ERROR] The name of the domain is required.", 2)
 		}
 		if modName == "" {
 			util.Exit("[ERROR] The name of the module is required.", 2)
 		}
 
-		d := types.NewDomainTmpl(directory, name, modName, "templates/gin", false, types.GinDomain)
+		d := types.NewDomainTmpl(directory, domain, modName, "templates/gin", false, types.GinDomain)
 
 		domain := rest_cli.ProjectTypeFactory(d)
 		err := domain.Create()
@@ -37,12 +37,12 @@ var createGinDomainCmd = &cobra.Command{
 
 		color.Set(color.FgGreen)
 
-		fmt.Printf("Successfully created gin domain: %s", name)
+		fmt.Printf("Successfully created gin domain: %s", domain)
 	},
 }
 
 func init() {
-	createGinDomainCmd.Flags().StringVarP(&name, "name", "n", "", "The name of the domain")
+	createGinDomainCmd.Flags().StringVarP(&domain, "name", "n", "", "The name of the domain")
 	createGinDomainCmd.Flags().StringVarP(&modName, "goModName", "m", "", "The Go mod name")
 	createGinDomainCmd.Flags().StringVarP(&directory, "directory", "p", "", "The Directory to create the project")
 	createGinDomainCmd.Flags().BoolVarP(&includeUtils, "includeUtils", "i", false, "Create with utils: makeHttpHandler and writeJson")

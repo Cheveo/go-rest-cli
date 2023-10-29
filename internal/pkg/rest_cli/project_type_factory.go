@@ -8,10 +8,10 @@ func ProjectTypeFactory(d *types.DomainTmpl) Create {
 		return NewStandardProject(d)
 	case types.StandardDomain:
 		return NewStandardDomain(d)
-	case types.GinDomain:
-		return NewGinDomain(d)
 	case types.GinProject:
 		return NewGinProject(d)
+	case types.GinDomain:
+		return NewGinDomain(d)
 	}
 
 	return nil
