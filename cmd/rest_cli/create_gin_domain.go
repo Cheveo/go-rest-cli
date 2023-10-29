@@ -42,7 +42,7 @@ var createGinDomainCmd = &cobra.Command{
 }
 
 func init() {
-	createGinDomainCmd.Flags().StringVarP(&domain, "name", "n", "", "The name of the domain")
+	createGinDomainCmd.Flags().StringVarP(&domain, "domain", "d", "", "The name of the domain")
 	createGinDomainCmd.Flags().StringVarP(&modName, "goModName", "m", "", "The Go mod name")
 	createGinDomainCmd.Flags().StringVarP(&directory, "directory", "p", "", "The Directory to create the project")
 	createGinDomainCmd.Flags().BoolVarP(&includeUtils, "includeUtils", "i", false, "Create with utils: makeHttpHandler and writeJson")
