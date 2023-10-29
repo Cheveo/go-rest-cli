@@ -11,12 +11,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var domain string
-
 var createProjectCmd = &cobra.Command{
-	Use:     "project",
-	Aliases: []string{"p"},
-	Short:   "Creates a whole REST Project from scratch",
+	Use:     "std-project",
+	Aliases: []string{"sp"},
+	Short:   "Creates a whole standard lib powered REST Project from scratch",
 	Args:    cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		color.Set(color.FgRed)
@@ -44,7 +42,12 @@ var createProjectCmd = &cobra.Command{
 
 		color.Set(color.FgGreen)
 
-		fmt.Printf("Successfully created standard lib webservice project \npath: %s \nwith domain: %s, \nwith module name: %s", directory, domain, modName)
+		fmt.Printf(
+			"Successfully created standard lib webservice project \npath: %s \nwith domain: %s, \nwith module name: %s",
+			directory, 
+			domain, 
+			modName,
+		)
 	},
 }
 

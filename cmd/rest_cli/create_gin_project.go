@@ -14,7 +14,7 @@ import (
 var createGinProjectCmd = &cobra.Command{
 	Use:     "gin-project",
 	Aliases: []string{"gp"},
-	Short:   "Creates a whole gin project from scratch",
+	Short:   "Creates a whole gin and gonic powered project from scratch",
 	Args:    cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		color.Set(color.FgRed)
@@ -30,7 +30,7 @@ var createGinProjectCmd = &cobra.Command{
 			util.Exit("[ERROR] The name of the directory is required.", 2)
 		}
 
-		d := types.NewDomainTmpl(directory, name, modName, "templates/gin", false, types.GinProject)
+		d := types.NewDomainTmpl(directory, domain, modName, "templates/gin", false, types.GinProject)
 		if _, err := os.Stat(d.Directory); !os.IsNotExist(err) {
 			util.Exit("[ERROR] Directory exists", 2)
 		}
@@ -43,7 +43,12 @@ var createGinProjectCmd = &cobra.Command{
 		}
 
 		color.Set(color.FgGreen)
-		fmt.Printf("Successfully created gin webservice project \npath: %s \nwith domain: %s, \nwith module name: %s", directory, domain, modName)
+		fmt.Printf(
+			"Successfully created gin webservice project \npath: %s \nwith domain: %s, \nwith module name: %s",
+			directory,
+			domain,
+			modName,
+		)
 	},
 }
 

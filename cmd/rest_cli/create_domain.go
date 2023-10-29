@@ -10,26 +10,25 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var name string
 var includeUtils bool = false
 
 var createDomainCmd = &cobra.Command{
-	Use:     "domain",
-	Aliases: []string{"d"},
-	Short:   "Creates a whole domain from scratch",
+	Use:     "std-domain",
+	Aliases: []string{"sd"},
+	Short:   "Creates a whole standard domain from scratch",
 	Args:    cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		color.Set(color.FgRed)
 		defer color.Unset()
-
-		if name == "" {
+	
+		if domain == "" {
 			util.Exit("[ERROR] The name of the domain is required.", 2)
 		}
 		if modName == "" {
 			util.Exit("[ERROR] The name of the module is required.", 2)
 		}
 
-		d := types.NewDomainTmpl(directory, name, modName, "templates", includeUtils, types.StandardDomain)
+		d := types.NewDomainTmpl(directory, domain, modName, "templates", includeUtils, types.StandardDomain)
 
 		domain := rest_cli.ProjectTypeFactory(d)
 		err := domain.Create()
@@ -39,12 +38,12 @@ var createDomainCmd = &cobra.Command{
 		}
 		color.Set(color.FgGreen)
 
-		fmt.Printf("Successfully created standard domain \nwith domain: %s", name)
+		fmt.Printf("Successfully created standard domain \nwith domain: %s", domain)
 	},
 }
 
 func init() {
-	createDomainCmd.Flags().StringVarP(&name, "name", "n", "", "The name of the domain")
+	createDomainCmd.Flags().StringVarP(&domain, "domain", "d", "", "The name of the domain")
 	createDomainCmd.Flags().StringVarP(&modName, "goModName", "m", "", "The Go mod name")
 	createDomainCmd.Flags().StringVarP(&directory, "directory", "p", "", "The Directory to create the project")
 	createDomainCmd.Flags().BoolVarP(&includeUtils, "includeUtils", "i", false, "Create with utils: makeHttpHandler and writeJson")
