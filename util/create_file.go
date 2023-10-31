@@ -39,3 +39,20 @@ func CreateGoMod(domain *types.DomainTmpl) []*types.FileInputs {
 	return []*types.FileInputs{&serverFileInput}
 }
 
+func Create(domain *types.DomainTmpl, configuration *types.Configuration) error {
+		for _, file := range configuration.Files {
+		err := CreateFileSkeleton([]*types.FileInputs{
+			CreateFileInput(
+				domain,
+				file.TemplatePath,
+				file.GetFilePath(domain.Domain),
+				file.GetFileName(domain.Domain),
+			),
+		})
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
