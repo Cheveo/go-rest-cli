@@ -1,8 +1,6 @@
 package rest_cli
 
 import (
-	_ "embed"
-
 	"github.com/Cheveo/go-rest-cli/config"
 	"github.com/Cheveo/go-rest-cli/types"
 	"github.com/Cheveo/go-rest-cli/util"

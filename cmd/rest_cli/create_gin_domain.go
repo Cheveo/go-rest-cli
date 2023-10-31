@@ -26,10 +26,10 @@ var createGinDomainCmd = &cobra.Command{
 			util.Exit("[ERROR] The name of the module is required.", 2)
 		}
 
-		d := types.NewDomainTmpl(directory, domain, modName, "templates/gin", false, types.GinDomain)
+		domainTmpl := types.NewDomainTmpl(directory, domain, modName, "templates/gin", false, types.GinDomain)
 
-		domain := rest_cli.ProjectTypeFactory(d)
-		err := domain.Create()
+		d := rest_cli.ProjectTypeFactory(domainTmpl)
+		err := d.Create()
 
 		if err != nil {
 			util.Exit(err.Error(), 2)
