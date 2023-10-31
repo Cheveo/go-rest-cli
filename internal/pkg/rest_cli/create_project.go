@@ -19,7 +19,7 @@ func (s *standardProject) Create() error {
 		return err
 	}
 
-	return util.Create(s.Domain, &c)
+	return util.WriteDomainDataToTemplateFile(s.Domain, &c)
 }
 
 func NewStandardProject(d *types.DomainTmpl) *standardProject {

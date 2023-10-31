@@ -43,13 +43,17 @@ type DomainTmpl struct {
 	TemplatePath      string
 }
 
-func NewDomainTmpl(directory, domain, modName, templatePath string, includeUtils bool, t ProjectType) *DomainTmpl {
+func NewDomainTmpl(directory, domain, modName, templatePath string, includeUtils bool, t ProjectType) (*DomainTmpl, error) {
 	var resolvedUserPath string
 	if directory != "" {
 		userPath, _ := os.UserHomeDir()
 		resolvedUserPath = userPath
 	} else {
-		resolvedUserPath = ""
+		path, err := os.Getwd()
+		if err != nil {
+			return nil, err
+		}
+		resolvedUserPath = path
 	}
 
 	return &DomainTmpl{
@@ -60,5 +64,5 @@ func NewDomainTmpl(directory, domain, modName, templatePath string, includeUtils
 		Type:              t,
 		IncludeUtils:      includeUtils,
 		TemplatePath:      templatePath,
-	}
+	}, nil
 }

@@ -18,7 +18,7 @@ func (s *standardDomain) Create() error {
 		return err
 	}
 
-	return util.Create(s.Domain, &c)
+	return util.WriteDomainDataToTemplateFile(s.Domain, &c)
 }
 
 func NewStandardDomain(d *types.DomainTmpl) *standardDomain {
