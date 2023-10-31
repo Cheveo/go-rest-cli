@@ -1,0 +1,85 @@
+files:
+  - templatePath: templates/go.mod.txt 
+    filePath: ""
+    fileName: go.mod
+    hasFilePathDomainPrefix: false
+    hasFileNameDomainPrefix: false
+
+  - templatePath: templates/main.txt 
+    filePath: cmd/api
+    fileName: main.go
+    hasFilePathDomainPrefix: false
+    hasFileNameDomainPrefix: false
+
+  - templatePath: templates/server.txt
+    filePath: server 
+    fileName: server.go
+    hasFilePathDomainPrefix: false
+    hasFileNameDomainPrefix: false
+
+  - templatePath: templates/util_make_http_handler.txt
+    filePath: utils 
+    fileName: make_http_handler.go
+    hasFilePathDomainPrefix: false
+    hasFileNameDomainPrefix: false
+
+  - templatePath: templates/util_write_json.txt
+    filePath: utils 
+    fileName: write_json.go
+    hasFilePathDomainPrefix: false
+    hasFileNameDomainPrefix: false
+
+  - templatePath: templates/model_tmpl.txt 
+    filePath: models
+    fileName: models.go
+    hasFilePathDomainPrefix: true 
+    hasFileNameDomainPrefix: true
+
+  - templatePath: templates/handler_interface_tmpl.txt 
+    filePath: handler 
+    fileName: handler.go
+    hasFilePathDomainPrefix: true
+    hasFileNameDomainPrefix: false
+
+  - templatePath: templates/handler_tmpl.txt 
+    filePath: handler 
+    fileName: handler.go
+    hasFilePathDomainPrefix: true 
+    hasFileNameDomainPrefix: true
+
+  - templatePath: templates/handler_http_errors_tmpl.txt 
+    filePath: handler 
+    fileName: http_error_handler.go
+    hasFilePathDomainPrefix: true 
+    hasFileNameDomainPrefix: false 
+
+
+  - templatePath: templates/service_interface_tmpl.txt 
+    filePath: service
+    fileName: service.go
+    hasFilePathDomainPrefix: true 
+    hasFileNameDomainPrefix: false
+
+  - templatePath: templates/service_tmpl.txt 
+    filePath: service
+    fileName: service.go
+    hasFilePathDomainPrefix: true 
+    hasFileNameDomainPrefix: true
+
+  - templatePath: templates/storage_interface_tmpl.txt 
+    filePath: storage 
+    fileName: storage.go
+    hasFilePathDomainPrefix: true
+    hasFileNameDomainPrefix: false
+    
+  - templatePath: templates/storage_tmpl.txt 
+    filePath: storage 
+    fileName: storage.go
+    hasFilePathDomainPrefix: true
+    hasFileNameDomainPrefix: true
+
+  - templatePath: templates/storage_sql_statements_tmpl.txt 
+    filePath: storage 
+    fileName: sql_statements.go
+    hasFilePathDomainPrefix: true
+    hasFileNameDomainPrefix: true
