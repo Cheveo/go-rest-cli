@@ -30,7 +30,6 @@ func CreateFileSkeleton(files []*types.FileInputs) error {
 		defer createdFile.Close()
 
 		err = tmpl.Execute(createdFile, file.Context)
-
 		if err != nil {
 			return err
 		}

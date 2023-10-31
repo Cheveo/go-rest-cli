@@ -9,3 +9,4 @@ func main() {
 	globals.LoadTemplates()
 	rest_cli.Execute()
 }
+
