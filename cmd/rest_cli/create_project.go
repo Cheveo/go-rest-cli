@@ -7,7 +7,6 @@ import (
 	"github.com/Cheveo/go-rest-cli/internal/pkg/rest_cli"
 	"github.com/Cheveo/go-rest-cli/types"
 	"github.com/Cheveo/go-rest-cli/util"
-	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -17,37 +16,33 @@ var createProjectCmd = &cobra.Command{
 	Short:   "Creates a whole standard lib powered REST Project from scratch",
 	Args:    cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		color.Set(color.FgRed)
-		defer color.Unset()
 		if domain == "" {
-			util.Exit("[ERROR] The name of the domain is required.", 2)
+			util.Exit("[ERROR] The name of the domain is required.", 1)
 		}
 		if modName == "" {
-			util.Exit("[ERROR] The name of the module is required.", 2)
-		}
-		if directory == "" {
-			util.Exit("[ERROR] The name of the directory is required.", 2)
+			util.Exit("[ERROR] The name of the module is required.", 1)
 		}
 
-		d := types.NewDomainTmpl(directory, domain, modName, "templates", false, types.StandardProject)
+		d, err := types.NewDomainTmpl(directory, domain, modName, "templates", false, types.StandardProject)
+		if err != nil {
+			util.Exit(err.Error(), 1)
+		}
 		if _, err := os.Stat(d.Directory); !os.IsNotExist(err) {
-			util.Exit("[ERROR] Directory exists", 2)
+			util.Exit("[ERROR] Directory exists", 1)
 		}
 
 		project := rest_cli.ProjectTypeFactory(d)
-		err := project.Create()
+		err = project.Create()
 		if err != nil {
-			util.Exit(err.Error(), 2)
+			util.Exit(err.Error(), 1)
 		}
 
-		color.Set(color.FgGreen)
-
-		fmt.Printf(
+		util.PrintSuccess(fmt.Sprintf(
 			"Successfully created standard lib webservice project \npath: %s \nwith domain: %s, \nwith module name: %s",
-			directory, 
-			domain, 
+			directory,
+			domain,
 			modName,
-		)
+		))
 	},
 }
 

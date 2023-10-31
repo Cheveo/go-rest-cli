@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-
-	"github.com/Cheveo/go-rest-cli/types"
 )
 
 func CreateFile(filePath string, name string, dir string) (*os.File, error) {
@@ -15,44 +13,5 @@ func CreateFile(filePath string, name string, dir string) (*os.File, error) {
 		return nil, err
 	}
 
-	return file, err
-}
-
-func CreateFileInput(domain *types.DomainTmpl, templatePath string, filePath string, modelFileName string) *types.FileInputs {
-	fileInput := types.FileInputs{
-		TemplatePath: templatePath,
-		FilePath:     filePath,
-		FileName:     modelFileName,
-		Context:      domain,
-	}
-	return &fileInput
-}
-
-func CreateGoMod(domain *types.DomainTmpl) []*types.FileInputs {
-	serverFileInput := types.FileInputs{
-		TemplatePath: "templates/go.mod.txt",
-		FilePath:     "",
-		FileName:     "go.mod",
-		Context:      domain,
-	}
-
-	return []*types.FileInputs{&serverFileInput}
-}
-
-func Create(domain *types.DomainTmpl, configuration *types.Configuration) error {
-		for _, file := range configuration.Files {
-		err := CreateFileSkeleton([]*types.FileInputs{
-			CreateFileInput(
-				domain,
-				file.TemplatePath,
-				file.GetFilePath(domain.Domain),
-				file.GetFileName(domain.Domain),
-			),
-		})
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
+	return file, nil 
 }

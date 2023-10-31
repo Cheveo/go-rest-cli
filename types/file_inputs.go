@@ -1,6 +1,6 @@
 package types
 
-type FileInputs struct {
+type FileInput struct {
 	TemplatePath string
 	FilePath     string
 	FileName     string

@@ -1,11 +1,8 @@
 package util
 
-import (
-	"fmt"
-	"os"
-)
+import "os"
 
 func Exit(message string, code int) {
-	fmt.Println(message)
+	PrintError(message)
 	os.Exit(code)
 }

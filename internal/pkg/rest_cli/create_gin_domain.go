@@ -18,7 +18,7 @@ func (gd *ginDomain) Create() error {
 		return err
 	}
 
-	return util.Create(gd.DomainTmpl, &c)
+	return util.WriteDomainDataToTemplateFile(gd.DomainTmpl, &c)
 }
 
 func NewGinDomain(d *types.DomainTmpl) *ginDomain {

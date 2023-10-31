@@ -6,7 +6,6 @@ import (
 	"github.com/Cheveo/go-rest-cli/internal/pkg/rest_cli"
 	"github.com/Cheveo/go-rest-cli/types"
 	"github.com/Cheveo/go-rest-cli/util"
-	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -16,28 +15,25 @@ var createGinDomainCmd = &cobra.Command{
 	Short:   "Creates a whole gin domain from scratch",
 	Args:    cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		color.Set(color.FgRed)
-		defer color.Unset()
-
 		if domain == "" {
-			util.Exit("[ERROR] The name of the domain is required.", 2)
+			util.Exit("[ERROR] The name of the domain is required.", 1)
 		}
 		if modName == "" {
-			util.Exit("[ERROR] The name of the module is required.", 2)
+			util.Exit("[ERROR] The name of the module is required.", 1)
 		}
 
-		domainTmpl := types.NewDomainTmpl(directory, domain, modName, "templates/gin", false, types.GinDomain)
+		domainTmpl, err := types.NewDomainTmpl(directory, domain, modName, "templates/gin", false, types.GinDomain)
+		if err != nil {
+			util.Exit(err.Error(), 1)
+		}
 
 		d := rest_cli.ProjectTypeFactory(domainTmpl)
-		err := d.Create()
-
+		err = d.Create()
 		if err != nil {
-			util.Exit(err.Error(), 2)
+			util.Exit(err.Error(), 1)
 		}
 
-		color.Set(color.FgGreen)
-
-		fmt.Printf("Successfully created gin domain: %s", domain)
+		util.PrintSuccess(fmt.Sprintf("Successfully created gin domain: %s", domain))
 	},
 }
 
