@@ -36,24 +36,21 @@ type DomainTmpl struct {
 	Directory         string
 	Domain            string
 	CapitalizedDomain string
-	StructName        string
 	GoMod             string
 	Type              ProjectType
-	IncludeUtils      bool
-	TemplatePath      string
 }
 
-func NewDomainTmpl(directory, domain, modName, templatePath string, includeUtils bool, t ProjectType) (*DomainTmpl, error) {
+func NewDomainTmpl(directory, domain, modName, projectName string, t ProjectType) (*DomainTmpl, error) {
 	var resolvedUserPath string
 	if directory != "" {
 		userPath, _ := os.UserHomeDir()
-		resolvedUserPath = userPath
+		resolvedUserPath = filepath.Join(userPath, projectName)
 	} else {
 		path, err := os.Getwd()
 		if err != nil {
 			return nil, err
 		}
-		resolvedUserPath = path
+		resolvedUserPath = filepath.Join(path, projectName)
 	}
 
 	return &DomainTmpl{
@@ -62,7 +59,5 @@ func NewDomainTmpl(directory, domain, modName, templatePath string, includeUtils
 		CapitalizedDomain: cases.Title(language.English, cases.Compact).String(domain),
 		GoMod:             modName,
 		Type:              t,
-		IncludeUtils:      includeUtils,
-		TemplatePath:      templatePath,
 	}, nil
 }
