@@ -19,11 +19,14 @@ var createGinProjectCmd = &cobra.Command{
 		if domain == "" {
 			util.Exit("[ERROR] The name of the domain is required.", 1)
 		}
-		if modName == "" {
+		if mod == "" {
 			util.Exit("[ERROR] The name of the module is required.", 1)
 		}
+		if name == "" {
+			util.Exit("[ERROR] The name of the project is required.", 1)
+		}
 
-		d, err := types.NewDomainTmpl(directory, domain, modName, "templates/gin", false, types.GinProject)
+		d, err := types.NewDomainTmpl(directory, domain, mod, name, types.GinProject)
 		if err != nil {
 			util.Exit(err.Error(), 1)
 		}
@@ -42,14 +45,15 @@ var createGinProjectCmd = &cobra.Command{
 			"Successfully created gin webservice project \npath: %s \nwith domain: %s, \nwith module name: %s",
 			directory,
 			domain,
-			modName,
+			mod,
 		))
 	},
 }
 
 func init() {
 	createGinProjectCmd.Flags().StringVarP(&domain, "domain", "d", "", "The name of the domain")
-	createGinProjectCmd.Flags().StringVarP(&modName, "goModName", "m", "", "The Go mod name")
+	createGinProjectCmd.Flags().StringVarP(&name, "name", "n", "", "The name of the project")
+	createGinProjectCmd.Flags().StringVarP(&mod, "module", "m", "", "The Go mod name")
 	createGinProjectCmd.Flags().StringVarP(&directory, "directory", "p", "", "The Directory to create the project")
 	createGinProjectCmd.Flags().BoolVarP(&includeUtils, "includeUtils", "i", false, "Create with utils: makeHttpHandler and writeJson")
 

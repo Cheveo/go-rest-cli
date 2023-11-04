@@ -12,8 +12,9 @@ import (
 
 var (
 	directory string
-	modName   string
+	mod       string
 	domain    string
+	name      string
 	ascii     = color.New(color.FgBlue).SprintFunc()(`
 ..######....#######..........########..########..######..########..........######..##.......####
 .##....##..##.....##.........##.....##.##.......##....##....##............##....##.##........##.
@@ -32,8 +33,8 @@ Is an opinionated tool to scaffold rest projects in golang.
 One can create separate domains or whole webservice projects, 
 powered by:
 
-	💎 standard lib and gorilla mux
-	💎 gin and gonic and Gorm
+	💎 Standard Lib + gorilla mux
+	💎 Gin & Gonic + Gorm
 
 for Web Servers.
 `,
@@ -44,6 +45,14 @@ for Web Servers.
 )
 
 func Execute() {
+	setCobraTemplate()
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Fprintf(os.Stderr, "Whoops. There was an error while executing your CLI '%s'", err)
+		os.Exit(1)
+	}
+}
+
+func setCobraTemplate() {
 	cobra.AddTemplateFunc("StyleHeading", color.New(color.FgGreen).SprintFunc())
 	usageTemplate := rootCmd.UsageTemplate()
 	usageTemplate = strings.NewReplacer(
@@ -55,8 +64,4 @@ func Execute() {
 	re := regexp.MustCompile(`(?m)^Flags:\s*$`)
 	usageTemplate = re.ReplaceAllLiteralString(usageTemplate, `{{StyleHeading "Flags:"}}`)
 	rootCmd.SetUsageTemplate(usageTemplate)
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintf(os.Stderr, "Whoops. There was an error while executing your CLI '%s'", err)
-		os.Exit(1)
-	}
 }

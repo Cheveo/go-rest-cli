@@ -19,11 +19,14 @@ var createProjectCmd = &cobra.Command{
 		if domain == "" {
 			util.Exit("[ERROR] The name of the domain is required.", 1)
 		}
-		if modName == "" {
+		if mod == "" {
 			util.Exit("[ERROR] The name of the module is required.", 1)
 		}
+		if name == "" {
+			util.Exit("[ERROR] The name of the project is required.", 1)
+		}
 
-		d, err := types.NewDomainTmpl(directory, domain, modName, "templates", false, types.StandardProject)
+		d, err := types.NewDomainTmpl(directory, domain, mod, name, types.StandardProject)
 		if err != nil {
 			util.Exit(err.Error(), 1)
 		}
@@ -41,14 +44,15 @@ var createProjectCmd = &cobra.Command{
 			"Successfully created standard lib webservice project \npath: %s \nwith domain: %s, \nwith module name: %s",
 			directory,
 			domain,
-			modName,
+			mod,
 		))
 	},
 }
 
 func init() {
+	createProjectCmd.Flags().StringVarP(&name, "name", "n", "", "The name of the domain")
 	createProjectCmd.Flags().StringVarP(&domain, "domain", "d", "", "The name of the domain")
-	createProjectCmd.Flags().StringVarP(&modName, "goModName", "m", "", "The Go mod name")
+	createProjectCmd.Flags().StringVarP(&mod, "goModName", "m", "", "The Go mod name")
 	createProjectCmd.Flags().StringVarP(&directory, "directory", "p", "", "The Directory to create the project")
 
 	rootCmd.AddCommand(createProjectCmd)

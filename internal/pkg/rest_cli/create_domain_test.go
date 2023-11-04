@@ -16,8 +16,7 @@ import (
 
 var path = "path/to/dir"
 var domain = "test"
-var modName = "test/go/mod"
-var templatePath = "templates"
+var module = "test/go/mod"
 
 ////////////////////////////
 // STD RELATED TEST DATA //
@@ -119,11 +118,8 @@ func (suite *CreationTestSuite) TestCreateStdProject() {
 		Domain:            domain,
 		Directory:         path,
 		CapitalizedDomain: "Test",
-		StructName:        "Test",
-		GoMod:             modName,
+		GoMod:             module,
 		Type:              types.StandardProject,
-		IncludeUtils:      false,
-		TemplatePath:      templatePath,
 	}
 
 	test(suite.T(), types.StandardProject, suite.stdProjectChecksumMap, path, d)
@@ -134,11 +130,8 @@ func (suite *CreationTestSuite) TestCreateStdDomain() {
 		Domain:            domain,
 		Directory:         path,
 		CapitalizedDomain: "Test",
-		StructName:        "Test",
-		GoMod:             modName,
+		GoMod:             module,
 		Type:              types.StandardDomain,
-		IncludeUtils:      false,
-		TemplatePath:      templatePath,
 	}
 
 	test(suite.T(), types.StandardDomain, suite.stdDomainChecksumMap, path, d)
@@ -149,11 +142,8 @@ func (suite *CreationTestSuite) TestCreateGinProject() {
 		Domain:            domain,
 		Directory:         path,
 		CapitalizedDomain: "Test",
-		StructName:        "Test",
-		GoMod:             modName,
+		GoMod:             module,
 		Type:              types.GinProject,
-		IncludeUtils:      false,
-		TemplatePath:      templatePath,
 	}
 
 	test(suite.T(), types.GinProject, suite.ginProjectChecksumMap, path, d)
@@ -163,11 +153,8 @@ func (suite *CreationTestSuite) TestCreateGinDomain() {
 		Domain:            domain,
 		Directory:         path,
 		CapitalizedDomain: "Test",
-		StructName:        "Test",
-		GoMod:             modName,
+		GoMod:             module,
 		Type:              types.GinDomain,
-		IncludeUtils:      false,
-		TemplatePath:      templatePath,
 	}
 
 	test(suite.T(), types.GinDomain, suite.ginDomainChecksumMap, path, d)
