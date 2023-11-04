@@ -1,42 +1,220 @@
-# go-rest-template-cli
-A CLI Tool to create domain driven REST Services
 
-REST-CLI is a command-line tool built with Golang and Cobra that simplifies the process of creating a whole Golang REST API project skeleton based on a specified domain and Go module name.
+## Badges
+| ![](https://img.shields.io/badge/Made_With-Go-blue)     | [![Unlicense](https://img.shields.io/badge/License-unlicense-green.svg)](https://choosealicense.com/licenses/unlicense/)        | ![Build](https://github.com/Cheveo/go-rest-cli/actions/workflows/go.yml/badge.svg?event=push) 
+| :--------     | :-------    | :---------
+
+
+# GO REST CLI
+```blue
+..######....#######..........########..########..######..########..........######..##.......####
+.##....##..##.....##.........##.....##.##.......##....##....##............##....##.##........##.
+.##........##.....##.........##.....##.##.......##..........##............##.......##........##.
+.##...####.##.....##.#######.########..######....######.....##....#######.##.......##........##.
+.##....##..##.....##.........##...##...##.............##....##............##.......##........##.
+.##....##..##.....##.........##....##..##.......##....##....##............##....##.##........##.
+..######....#######..........##.....##.########..######.....##.............######..########.####
+```
+
+Is an opinionated tool to scaffold rest projects in golang.
+One can create separate domains or whole webservice projects,
+powered by:
+
+	💎 Standard Library + gorilla mux
+	💎 Gin & Gonic + Gorm
+
+for Web Servers.
+
 
 ## Installation
 
-To install `rest-cli`, you can use `go get`:
+simply use the go install command:
 
 ```bash
-go get github.com/Cheveo/go-rest-cli
+  go install https://github.com/Cheveo/go-rest-cli
+```
+    
+## API Reference
+
+```
+Use "go-rest-cli [command] --help" for more information about a command.
 ```
 
-## Usage
-
-Once installed, you can use `rest-cli` to create a new Golang REST API project skeleton in a specific directory with the following flags:
-
-- `--domain`: Specify the domain object for your REST API.
-- `--directory`: Specify the directory where you want to create the project.
-- `--goModName`: Specify the Go module name for your project.
-
-### Example
+#### Create a [Standard Library](https://pkg.go.dev/std) and [Gorilla Mux](https://github.com/gorilla/mux) based project
 
 ```bash
-rest-cli create --domain user --directory my-api-project --goModName example.com/test
+  go-rest-cli std-project
 ```
 
-This command will create a new Golang REST API project skeleton in the `my-api-project` directory, with the Go module name set to `example.com/test` and the domain set to `user`.
+| Parameter     | Short       | Type      | Description             | IsRequired |
+| :--------     | :-------    | :---------|:---------------         |:--------
+| `--name`      | `-n`        | string    | Project Name            | **Required**
+| `--module`    | `-m`        | string    | Go Module Name          | **Required**
+| `--domain`    | `-d`        | string    | Domain Name             | **Required**
+| `--directory` | `-p`        | string    | Path/Directory Name (if not set the current working directory is used)     | **Optional**
 
-## License
+```
+// resulting structure
+.
+└── my-project/
+    ├── my-domain/
+    │   ├── handler/
+    │   │   ├── handler.go
+    │   │   └── {{my-domain}}_handler.go
+    │   ├── service/
+    │   │   ├── service.go
+    │   │   └── {{my-domain}}_service.go
+    │   ├── models/
+    │   │   └── {{my-domain}}_models.go
+    │   └── storage/
+    │       ├── storage.go
+    │       ├── {{my-domain}}_sql_statements
+    │       └── {{my-domain}}_storage.go
+    ├── cmd/
+    │   └── api/
+    │       └── main.go
+    ├── server/
+    │   └── server.go
+    ├── utils/
+    │   ├── make_http_handler.go
+    │   └── write_json.go
+    └── go.mod 
+```
 
-This project is licensed under the [MIT License](LICENSE).
+#### Create a [Standard Library](https://pkg.go.dev/std) based domain
 
-## Contribution
+```bash
+  go-rest-cli std-domain
+```
 
-Contributions are welcome! Feel free to open an issue or submit a pull request.
+| Parameter     | Short       | Type      | Description             | IsRequired |
+| :--------     | :-------    | :---------|:---------------         |:--------
+| `--module`    | `-m`        | string    | Go Module Name          | **Required**
+| `--domain`    | `-d`        | string    | Domain Name             | **Required**
+| `--directory` | `-p`        | string    | Path/Directory Name (if not set the current working directory is used)     | **Optional**
 
-## Author
+```
+// Resulting directory structure
+.
+└── my-domain/
+    ├── handler
+    ├── service
+    ├── models
+    └── storage
+```
 
-- Danyal iqbal
-- GitHub: [github.com/Sagato](https://github.com/Sagato)
-- Website: [cheveo.de](https://cheveo.de)
+#### Create a [Gin & Gonic](https://github.com/gin-gonic/gin) and [Gorm](https://gorm.io/index.html) based project
+
+```bash
+  go-rest-cli gin-project
+```
+
+| Parameter     | Short       | Type      | Description             | IsRequired |
+| :--------     | :-------    | :---------|:---------------         |:--------
+| `--name`      | `-n`        | string    | Project Name            | **Required**
+| `--module`    | `-m`        | string    | Go Module Name          | **Required**
+| `--domain`    | `-d`        | string    | Domain Name             | **Required**
+| `--directory` | `-p`        | string    | Path/Directory Name (if not set the current working directory is used)     | **Optional**
+
+```
+// resulting structure
+.
+└── my-project/
+    ├── my-domain/
+    │   ├── handler/
+    │   │   ├── handler.go
+    │   │   └── {{my-domain}}_handler.go
+    │   ├── service/
+    │   │   ├── service.go
+    │   │   └── {{my-domain}}_service.go
+    │   ├── models/
+    │   │   └── {{my-domain}}_models.go
+    │   └── storage/
+    │       ├── storage.go
+    │       └── {{my-domain}}_storage.go
+    ├── cmd/
+    │   └── api/
+    │       └── main.go
+    ├── db/
+    │   ├── db.go
+    │   └── gorm_db.go
+    ├── errors/
+    │   └── http_error.go
+    ├── middlewares/
+    │   └── error_handler.go
+    ├── responses/
+    │   └── http_response.go
+    └── go.mod
+```
+
+#### Create a [Gin & Gonic](https://github.com/gin-gonic/gin) and [Gorm](https://gorm.io/index.html) based domain
+
+```bash
+  go-rest-cli gin-domain
+```
+
+| Parameter     | Short       | Type      | Description             | IsRequired |
+| :--------     | :-------    | :---------|:---------------         |:--------
+| `--name`      | `-n`        | string    | Project Name            | **Required**
+| `--module`    | `-m`        | string    | Go Module Name          | **Required**
+| `--domain`    | `-d`        | string    | Domain Name             | **Required**
+| `--directory` | `-p`        | string    | Path/Directory Name (if not set the current working directory is used)     | **Optional**
+
+```
+// Resulting directory structure
+.
+└── my-domain/
+    ├── handler
+    ├── service
+    ├── models
+    └── storage
+```
+
+
+## Why I created this
+
+Since we use golang very often in our company to build web services and the basic structure is always the same, I decided to write a CLI tool that creates a web service project or even a whole domain from scratch.
+
+The tool is influenced by the typical layered architecture in classic web services. Basically golang is often used for creating microservices, but often microservices are overkill while maintaining a good monolithic codebase has it's advantages. If you get to the point where scaling and performance are actually the bottlenecks, then it makes sense to switch to microservices, depending on the use case.
+
+The tool is primarily intended for internal purposes and should help us to reach our goal faster. We have created the tool using the factory and strategy pattern to make the extension simple and adhere to the solid principle.
+
+There is still a lot to do and many ways to extend it. We welcome anyone who is interested in contributing or simply using it.
+
+
+## 🚀 About Me
+I’m an enthusiastic web developer boasting over 6 years of experience crafting web applications.
+I have a relentless drive for learning new techrelated concepts and techniques to continually enhance my engineering skills. I take pride in my strong communication abilities and enjoy engaging in discussions about effective implementations and architectural ideas. Please don't hesitate to contact me.
+
+
+## 🔗 Links
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://cheveo.de/profiles/danyal-iqbal)
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/danyal-iqbal-3b46b6ab/)
+
+
+
+## 🛠 Skills
+using technologies such as:
+* Angular
+* Nx
+* NestJS
+* TypeScript
+* NodeJS
+* Golang
+* Amazon Web Services
+* Firebase
+
+
+## Authors
+
+- [@Sagato](https://github.com/Sagato)
+- [@Cheveo](https://github.com/Cheveo)
+
+
+## Contributing
+
+Contributions are always welcome!
+
+Kindly create a pull request or file an issue for feature requests.
+
+Please adhere to this project's `code of conduct`.
