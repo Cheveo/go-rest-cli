@@ -3,7 +3,7 @@ package util
 import (
 	"path/filepath"
 
-	"github.com/Cheveo/go-rest-cli/globals"
+	"github.com/Cheveo/go-rest-cli/templates"
 	"github.com/Cheveo/go-rest-cli/types"
 )
 
@@ -12,7 +12,7 @@ func WriteDomainDataToTemplateFile(domain *types.DomainTmpl, configuration *type
 		filePath := file.GetFilePath(domain.Domain)
 		fileName := file.GetFileName(domain.Domain)
 
-		tmpls := globals.Templates
+		tmpls := templates.Templates
 
 		// templates are organized via template path
 		tmpl := tmpls[file.TemplatePath]

@@ -1,41 +1,41 @@
 files:
-  - templatePath: templates/gin/model_tmpl.txt 
+  - templatePath: gin/model_tmpl.txt 
     filePath: models
     fileName: models.go
     hasFilePathDomainPrefix: true 
     hasFileNameDomainPrefix: true
 
-  - templatePath: templates/gin/handler_interface_tmpl.txt 
+  - templatePath: gin/handler_interface_tmpl.txt 
     filePath: handler 
     fileName: handler.go
     hasFilePathDomainPrefix: true
     hasFileNameDomainPrefix: false
 
-  - templatePath: templates/gin/handler_tmpl.txt 
+  - templatePath: gin/handler_tmpl.txt 
     filePath: handler 
     fileName: handler.go
     hasFilePathDomainPrefix: true 
     hasFileNameDomainPrefix: true
 
-  - templatePath: templates/service_interface_tmpl.txt 
+  - templatePath: base/service_interface_tmpl.txt 
     filePath: service
     fileName: service.go
     hasFilePathDomainPrefix: true 
     hasFileNameDomainPrefix: false
 
-  - templatePath: templates/service_tmpl.txt 
+  - templatePath: base/service_tmpl.txt 
     filePath: service
     fileName: service.go
     hasFilePathDomainPrefix: true 
     hasFileNameDomainPrefix: true
 
-  - templatePath: templates/gin/storage_interface_tmpl.txt 
+  - templatePath: gin/storage_interface_tmpl.txt 
     filePath: storage 
     fileName: storage.go
     hasFilePathDomainPrefix: true
     hasFileNameDomainPrefix: false
     
-  - templatePath: templates/gin/storage_tmpl.txt 
+  - templatePath: gin/storage_tmpl.txt 
     filePath: storage 
     fileName: storage.go
     hasFilePathDomainPrefix: true

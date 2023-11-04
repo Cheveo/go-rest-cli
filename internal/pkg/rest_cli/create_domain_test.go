@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/Cheveo/go-rest-cli/globals"
+	"github.com/Cheveo/go-rest-cli/templates"
 	"github.com/Cheveo/go-rest-cli/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
@@ -94,7 +94,6 @@ type CreationTestSuite struct {
 	ginDomainChecksumMap  map[string]string
 }
 
-// Make sure that VariableThatShouldStartAtFive is set to five
 // before each test
 func (suite *CreationTestSuite) SetupTest() {
 	suite.path = path
@@ -102,6 +101,11 @@ func (suite *CreationTestSuite) SetupTest() {
 	suite.stdDomainChecksumMap = stdDomainChecksumMap
 	suite.ginProjectChecksumMap = ginProjectChecksumMap
 	suite.ginDomainChecksumMap = ginDomainChecksumMap
+	err := templates.LoadTemplates()
+	if err != nil {
+		suite.T().Error(err.Error())
+	}
+
 }
 
 func TestCreationTestSuite(t *testing.T) {
@@ -124,6 +128,7 @@ func (suite *CreationTestSuite) TestCreateStdProject() {
 
 	test(suite.T(), types.StandardProject, suite.stdProjectChecksumMap, path, d)
 }
+
 func (suite *CreationTestSuite) TestCreateStdDomain() {
 	d := &types.DomainTmpl{
 		Domain:            domain,
@@ -138,6 +143,7 @@ func (suite *CreationTestSuite) TestCreateStdDomain() {
 
 	test(suite.T(), types.StandardDomain, suite.stdDomainChecksumMap, path, d)
 }
+
 func (suite *CreationTestSuite) TestCreateGinProject() {
 	d := &types.DomainTmpl{
 		Domain:            domain,
@@ -168,13 +174,8 @@ func (suite *CreationTestSuite) TestCreateGinDomain() {
 }
 
 func test(t *testing.T, projectType types.ProjectType, checksums map[string]string, path string, d *types.DomainTmpl) {
-	err := globals.LoadTemplates()
-	if err != nil {
-		t.Error(err.Error())
-	}
-
 	domain := ProjectTypeFactory(d)
-	err = domain.Create()
+	err := domain.Create()
 	if err != nil {
 		t.Error(err.Error())
 	}
