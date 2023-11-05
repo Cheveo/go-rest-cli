@@ -1,7 +1,10 @@
+## License and State
 
-## Badges
-| ![](https://img.shields.io/badge/Made_With-Go-blue)     | [![Unlicense](https://img.shields.io/badge/License-unlicense-green.svg)](https://choosealicense.com/licenses/unlicense/)        | ![Build](https://github.com/Cheveo/go-rest-cli/actions/workflows/go.yml/badge.svg?event=push) 
-| :--------     | :-------    | :---------
+| ![WTFPL](https://upload.wikimedia.org/wikipedia/commons/0/0a/WTFPL_badge.svg) | WTFPL – Do What the Fuck You Want to Public License
+| :-------- | :-------- |
+
+| ![](https://img.shields.io/badge/Made_With-Go-blue) | ![Build](https://github.com/Cheveo/go-rest-cli/actions/workflows/go.yml/badge.svg?event=push) 
+| :--------     | :-------    |
 
 
 # GO REST CLI
