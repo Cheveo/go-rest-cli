@@ -1,5 +1,5 @@
 package rest_cli
 
-type Create interface {
+type Creator interface {
 	Create() error
 }

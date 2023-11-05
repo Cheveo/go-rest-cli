@@ -2,7 +2,7 @@ package rest_cli
 
 import "github.com/Cheveo/go-rest-cli/types"
 
-func ProjectTypeFactory(d *types.DomainTmpl) Create {
+func ProjectTypeFactory(d *types.DomainTmpl) Creator {
 	switch d.Type {
 	case types.StandardProject:
 		return NewStandardProject(d)
