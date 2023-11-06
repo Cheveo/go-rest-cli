@@ -35,7 +35,11 @@ var createDomainCmd = &cobra.Command{
 			util.Exit("[ERROR] Domain exists", 1)
 		}
 
-		d := rest_cli.ProjectTypeFactory(domainTmpl)
+		d, err := rest_cli.ProjectTypeFactory(domainTmpl)
+		if err != nil {
+			util.Exit(err.Error(), 1)
+		}
+
 		err = d.Create()
 		if err != nil {
 			util.Exit(err.Error(), 1)

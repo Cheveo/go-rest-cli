@@ -161,8 +161,12 @@ func (suite *CreationTestSuite) TestCreateGinDomain() {
 }
 
 func test(t *testing.T, projectType types.ProjectType, checksums map[string]string, path string, d *types.DomainTmpl) {
-	domain := ProjectTypeFactory(d)
-	err := domain.Create()
+	domain, err := ProjectTypeFactory(d)
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	err = domain.Create()
 	if err != nil {
 		t.Error(err.Error())
 	}

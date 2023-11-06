@@ -34,7 +34,11 @@ var createProjectCmd = &cobra.Command{
 			util.Exit("[ERROR] Directory exists", 1)
 		}
 
-		project := rest_cli.ProjectTypeFactory(d)
+		project, err := rest_cli.ProjectTypeFactory(d)
+		if err != nil {
+			util.Exit(err.Error(), 1)
+		}
+
 		err = project.Create()
 		if err != nil {
 			util.Exit(err.Error(), 1)
