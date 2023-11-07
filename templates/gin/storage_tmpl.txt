@@ -68,11 +68,11 @@ func (storage *{{.Domain}}Storage) Delete{{.CapitalizedDomain}}(id int) error {
 	res := storage.DBPool.Delete(&{{.Domain}}_models.{{.CapitalizedDomain}}{}, id)
 
 if res.Error != nil {
-		return nil, errors.NewHttpError("Malformed client request", http.StatusBadRequest)
+		return errors.NewHttpError("Malformed client request", http.StatusBadRequest)
 	}
 
 	if res.RowsAffected == 0 {
-		return nil, errors.NewHttpError("Resource not found", http.StatusNotFound)
+		return errors.NewHttpError("Resource not found", http.StatusNotFound)
 	}
 
 	return nil

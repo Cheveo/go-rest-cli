@@ -72,7 +72,7 @@ var ginProjectChecksumMap = map[string]string{
 	"path/to/dir/test/service/service.go":      "31392e29d4e7f45eda192f2178b2a8ecb0b6329058b270dfd278a6934c070b3f",
 	"path/to/dir/test/service/test_service.go": "50af08e55e1ebff10f1fa92004e263921bc82a0b05f377c9f9811df6979ae33e",
 	"path/to/dir/test/storage/storage.go":      "6ea17dfa361d13ce7e53a36c104b57d805174a3300c8f4dc4c1bf3345528df7e",
-	"path/to/dir/test/storage/test_storage.go": "8b1064e6ad05c36a083f375794a8a3308e7373273024658ff30c4a8c1adf8792",
+	"path/to/dir/test/storage/test_storage.go": "e5508785c85e540a9348a99864d81bad7f82ca06b69072ab4f0f5338ef85c8de",
 }
 var ginDomainChecksumMap = map[string]string{
 	"path/to/dir/test/handler/handler.go":      "703c6679e68fcbe35808c1432a2891403300c1eb0823aaaa1e8be4039f21093f",
@@ -81,7 +81,7 @@ var ginDomainChecksumMap = map[string]string{
 	"path/to/dir/test/service/service.go":      "31392e29d4e7f45eda192f2178b2a8ecb0b6329058b270dfd278a6934c070b3f",
 	"path/to/dir/test/service/test_service.go": "50af08e55e1ebff10f1fa92004e263921bc82a0b05f377c9f9811df6979ae33e",
 	"path/to/dir/test/storage/storage.go":      "6ea17dfa361d13ce7e53a36c104b57d805174a3300c8f4dc4c1bf3345528df7e",
-	"path/to/dir/test/storage/test_storage.go": "8b1064e6ad05c36a083f375794a8a3308e7373273024658ff30c4a8c1adf8792",
+	"path/to/dir/test/storage/test_storage.go": "e5508785c85e540a9348a99864d81bad7f82ca06b69072ab4f0f5338ef85c8de",
 }
 
 type CreationTestSuite struct {
