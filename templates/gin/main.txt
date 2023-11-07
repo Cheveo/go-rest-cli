@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"{{.GoMod}}/db"
+	"{{.GoMod}}/middlewares"
 	{{.Domain}}_handler "{{.GoMod}}/{{.Domain}}/handler"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -18,8 +19,10 @@ func SetupRouter() *gin.Engine {
 
 	r := gin.Default()
 
-	uh := {{.Domain}}_handler.New{{.CapitalizedDomain}}Handler(db)
-	uh.SetupRouter(r)
+	r.Use(middlewares.ErrorHandler())
+
+	h := {{.Domain}}_handler.New{{.CapitalizedDomain}}Handler(db)
+	h.SetupRouter(r)
 
 	return r
 }

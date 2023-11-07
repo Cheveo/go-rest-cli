@@ -59,7 +59,7 @@ var stdDomainChecksumMap = map[string]string{
 
 // map of corresponding gin domain filepaths --> checksums of files
 var ginProjectChecksumMap = map[string]string{
-	"path/to/dir/cmd/api/main.go":              "b45223acf228008c3dac35506f5939a35da04ab184cdd2900b5c2ce2d6b82fd8",
+	"path/to/dir/cmd/api/main.go":              "d12015466c7830c78e450719e5961683c76fdf4019225af697492c24d2ea3b65",
 	"path/to/dir/go.mod":                       "5c763f7370eeea4343e25d8d87f20a5cd8ab810a6877ebb31e75c09314528f8d",
 	"path/to/dir/errors/http_error.go":         "3aff8bb087494d9b6f6631b8401a3dfb0f163e68a5df3538ab3245fa8ea54e17",
 	"path/to/dir/responses/http_response.go":   "401bbb4b1538438cd7784c050c3e30332c1b5d7c9ea4b7b8f643060d612aafeb",
@@ -67,21 +67,21 @@ var ginProjectChecksumMap = map[string]string{
 	"path/to/dir/db/gorm_db.go":                "683868aac53ef07bb32289a8297d34ecdb49a8b3c65d8f77e4cf409e955be6d3",
 	"path/to/dir/middlewares/error_handler.go": "407ded92c80da7fca6e760dc3067b3b2c36584353db61306be2ba2d3ea7e2359",
 	"path/to/dir/test/handler/handler.go":      "703c6679e68fcbe35808c1432a2891403300c1eb0823aaaa1e8be4039f21093f",
-	"path/to/dir/test/handler/test_handler.go": "21daaf29fdc25ae4f56243cf11d2bdd6bda1d866e283eae5d9753d995229de70",
+	"path/to/dir/test/handler/test_handler.go": "cf02cdb9ec4d32a271fe1a5788011ae154b1f1fd6d65471ed2c1d2a8e0284801",
 	"path/to/dir/test/models/test_models.go":   "4cb26cbf263faa2240730b1418a94c2e45f60838a096528d5c4777d0e3dc9fad",
 	"path/to/dir/test/service/service.go":      "31392e29d4e7f45eda192f2178b2a8ecb0b6329058b270dfd278a6934c070b3f",
 	"path/to/dir/test/service/test_service.go": "50af08e55e1ebff10f1fa92004e263921bc82a0b05f377c9f9811df6979ae33e",
 	"path/to/dir/test/storage/storage.go":      "6ea17dfa361d13ce7e53a36c104b57d805174a3300c8f4dc4c1bf3345528df7e",
-	"path/to/dir/test/storage/test_storage.go": "5cd33a37fdd2889874d93604fb8e232714ef390e481bb1a4d882aa8ae9284c53",
+	"path/to/dir/test/storage/test_storage.go": "8b1064e6ad05c36a083f375794a8a3308e7373273024658ff30c4a8c1adf8792",
 }
 var ginDomainChecksumMap = map[string]string{
 	"path/to/dir/test/handler/handler.go":      "703c6679e68fcbe35808c1432a2891403300c1eb0823aaaa1e8be4039f21093f",
-	"path/to/dir/test/handler/test_handler.go": "21daaf29fdc25ae4f56243cf11d2bdd6bda1d866e283eae5d9753d995229de70",
+	"path/to/dir/test/handler/test_handler.go": "cf02cdb9ec4d32a271fe1a5788011ae154b1f1fd6d65471ed2c1d2a8e0284801",
 	"path/to/dir/test/models/test_models.go":   "4cb26cbf263faa2240730b1418a94c2e45f60838a096528d5c4777d0e3dc9fad",
 	"path/to/dir/test/service/service.go":      "31392e29d4e7f45eda192f2178b2a8ecb0b6329058b270dfd278a6934c070b3f",
 	"path/to/dir/test/service/test_service.go": "50af08e55e1ebff10f1fa92004e263921bc82a0b05f377c9f9811df6979ae33e",
 	"path/to/dir/test/storage/storage.go":      "6ea17dfa361d13ce7e53a36c104b57d805174a3300c8f4dc4c1bf3345528df7e",
-	"path/to/dir/test/storage/test_storage.go": "5cd33a37fdd2889874d93604fb8e232714ef390e481bb1a4d882aa8ae9284c53",
+	"path/to/dir/test/storage/test_storage.go": "8b1064e6ad05c36a083f375794a8a3308e7373273024658ff30c4a8c1adf8792",
 }
 
 type CreationTestSuite struct {

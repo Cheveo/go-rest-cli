@@ -1,6 +1,9 @@
 package {{.Domain}}_storage
 
 import (
+    "net/http"
+
+	"{{.GoMod}}/errors"
 	{{.Domain}}_models "{{.GoMod}}/{{.Domain}}/models"
 	"gorm.io/gorm"
 )
@@ -35,20 +38,42 @@ func (storage *{{.Domain}}Storage) Create{{.CapitalizedDomain}}({{.Domain}} *{{.
 func (storage *{{.Domain}}Storage) Update{{.CapitalizedDomain}}({{.Domain}} *{{.Domain}}_models.{{.CapitalizedDomain}}) error {
 	res := storage.DBPool.Save({{.Domain}})
 
-	return res.Error
+    if res.Error != nil {
+		return errors.NewHttpError("Malformed client request", http.StatusBadRequest)
+	}
+
+	if res.RowsAffected == 0 {
+		return errors.NewHttpError("Resource not found", http.StatusNotFound)
+	}
+
+	return nil 
 }
 func (storage *{{.Domain}}Storage) Get{{.CapitalizedDomain}}ById(id int) (*{{.Domain}}_models.{{.CapitalizedDomain}}, error) {
 	{{.Domain}} := new({{.Domain}}_models.{{.CapitalizedDomain}})
 
 	res := storage.DBPool.Find(&{{.Domain}}, id)
-	if res.Error != nil {
-		return nil, res.Error
+
+    if res.Error != nil {
+		return nil, errors.NewHttpError("Malformed client request", http.StatusBadRequest)
 	}
+
+	if res.RowsAffected == 0 {
+		return nil, errors.NewHttpError("Resource not found", http.StatusNotFound)
+	}
+	
 
 	return {{.Domain}}, nil
 }
 func (storage *{{.Domain}}Storage) Delete{{.CapitalizedDomain}}(id int) error {
 	res := storage.DBPool.Delete(&{{.Domain}}_models.{{.CapitalizedDomain}}{}, id)
 
-	return res.Error
+if res.Error != nil {
+		return nil, errors.NewHttpError("Malformed client request", http.StatusBadRequest)
+	}
+
+	if res.RowsAffected == 0 {
+		return nil, errors.NewHttpError("Resource not found", http.StatusNotFound)
+	}
+
+	return nil
 }
